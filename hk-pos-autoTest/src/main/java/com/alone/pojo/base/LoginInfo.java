@@ -2,6 +2,7 @@ package com.alone.pojo.base;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  *
@@ -10,6 +11,7 @@ import lombok.Data;
  */
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class LoginInfo {
 
     public String loginId;

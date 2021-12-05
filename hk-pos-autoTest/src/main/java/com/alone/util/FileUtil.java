@@ -15,7 +15,12 @@ import java.util.Map;
  * @Date: 2021/12/4 16:41
  */
 public class FileUtil {
-
+    /**
+     * 获取curl的信息
+     * @param path
+     * @return
+     * @throws IOException
+     */
     public String getCurl(String path) throws IOException {
         String content = "";
         StringBuilder builder = new StringBuilder();
@@ -31,6 +36,12 @@ public class FileUtil {
         return builder.toString();
     }
 
+    /**
+     * 读取文件并返回对象
+     * @param path
+     * @return
+     * @throws IOException
+     */
     public EnvironmentInfo getCurlObject(String path) throws IOException {
         String content = "";
         StringBuilder builder = new StringBuilder();
@@ -57,5 +68,33 @@ public class FileUtil {
                 ,EnvironmentInfo.class);
 
         return environmentInfo;
+    }
+
+    /**
+     * 将接口返回结果写入文件中
+     * @param res
+     * @param path
+     */
+    public void writeResponse(String res,String path){
+        FileWriter fileWriter = null;
+        try{
+            File file = new File(path);
+            fileWriter = new FileWriter(file,true);
+        }catch (Exception e){
+            System.out.println(e);
+        }
+
+        PrintWriter printWriter = new PrintWriter(fileWriter);
+        printWriter.println();
+        printWriter.println();
+        printWriter.println(res);
+        printWriter.flush();
+        try {
+            fileWriter.flush();
+            printWriter.close();
+            fileWriter.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

@@ -26,9 +26,9 @@ public class AutoRun {
         String terminalId = "138";
         String terminalCode = "terminal-ejLcb";
         //1352,1636
-        String eventId = "1636";
-        int posType = PosTypeEnum.valueOf("REG").getStatus();
-        int stockNum = 1;
+        String eventId = "1352";
+        int posType = PosTypeEnum.valueOf("BUK").getStatus();
+        int stockNum = 3;
 
         LoginInfo loginInfo = new LoginInfo(loginId, password, terminalId, terminalCode);
 
