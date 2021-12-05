@@ -7,8 +7,16 @@
     <groupId>org.example</groupId>
     <artifactId>hk-pos-autoTest</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
 
     <dependencies>
+
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -32,7 +40,6 @@
             <artifactId>testng</artifactId>
             <version>7.3.0</version>
         </dependency>
-        
     </dependencies>
 
 
