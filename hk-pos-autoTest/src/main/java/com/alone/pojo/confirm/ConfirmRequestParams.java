@@ -1,5 +1,6 @@
-package com.alone.pojo;
+package com.alone.pojo.confirm;
 
+import com.alone.pojo.confirm.ConfirmStockInfo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

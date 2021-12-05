@@ -1,4 +1,4 @@
-package com.alone.pojo;
+package com.alone.pojo.seat;
 
 import lombok.Data;
 

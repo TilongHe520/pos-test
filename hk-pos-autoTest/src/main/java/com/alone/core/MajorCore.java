@@ -2,10 +2,14 @@ package com.alone.core;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.alone.pojo.*;
 import com.alone.pojo.base.CurlParams;
 import com.alone.pojo.base.EnvironmentInfo;
 import com.alone.pojo.base.LoginInfo;
+import com.alone.pojo.cart.CartTicketInfo;
+import com.alone.pojo.confirm.ConfirmRequestParams;
+import com.alone.pojo.confirm.ConfirmStockInfo;
+import com.alone.pojo.event.PerformanceInfo;
+import com.alone.pojo.event.PriceZoneInfo;
 import com.alone.util.JsonUtil;
 import com.alone.util.PriceZoneUtil;
 import com.alone.util.ResolveCurl;
@@ -91,7 +95,7 @@ public class MajorCore {
         return performanceInfos;
     }
 
-    public List<ConfirmRequestParams> detail(String eventId, String cookies,String performanceId,int posType,int stockNum){
+    public List<ConfirmRequestParams> detail(String eventId, String cookies, String performanceId, int posType, int stockNum){
         ResolveCurl rs = new ResolveCurl(environmentInfo.getCurlDetail());
         CurlParams cp = rs.getParams();
         Map<String,String> map = cp.getHeader();

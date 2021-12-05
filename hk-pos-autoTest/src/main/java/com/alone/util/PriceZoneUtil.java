@@ -2,7 +2,10 @@ package com.alone.util;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.alone.pojo.*;
+import com.alone.pojo.confirm.ConfirmRequestParams;
+import com.alone.pojo.confirm.ConfirmStockInfo;
+import com.alone.pojo.event.PriceZoneInfo;
+import com.alone.pojo.event.TicketTypeInfo;
 
 import java.util.ArrayList;
 import java.util.List;

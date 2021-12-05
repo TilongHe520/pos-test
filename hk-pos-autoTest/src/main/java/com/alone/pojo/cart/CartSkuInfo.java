@@ -1,4 +1,4 @@
-package com.alone.pojo;
+package com.alone.pojo.cart;
 
 import lombok.Data;
 

@@ -2,10 +2,9 @@ package com.alone.util;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.alone.pojo.CartSkuInfo;
-import com.alone.pojo.NoSeatInfo;
-import com.alone.pojo.SeatInfo;
-import com.alone.pojo.base.LoginInfo;
+import com.alone.pojo.cart.CartSkuInfo;
+import com.alone.pojo.seat.NoSeatInfo;
+import com.alone.pojo.seat.SeatInfo;
 
 import java.util.ArrayList;
 

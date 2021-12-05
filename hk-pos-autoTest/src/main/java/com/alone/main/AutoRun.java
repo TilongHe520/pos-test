@@ -3,17 +3,16 @@ package com.alone.main;
 import com.alone.core.MajorCore;
 import com.alone.enums.PosTypeEnum;
 import com.alone.environment.GetEnvironment;
-import com.alone.pojo.CartTicketInfo;
-import com.alone.pojo.ConfirmRequestParams;
+import com.alone.pojo.cart.CartTicketInfo;
+import com.alone.pojo.confirm.ConfirmRequestParams;
 import com.alone.pojo.base.EnvironmentInfo;
 import com.alone.pojo.base.LoginInfo;
-import com.alone.pojo.PerformanceInfo;
+import com.alone.pojo.event.PerformanceInfo;
 import com.alone.util.JsonUtil;
 import com.alone.util.SeatUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
