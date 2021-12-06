@@ -28,6 +28,7 @@ public class GetEnvironment {
             environment.setCurlPrePay(environment.getCurlPrePay().replace("http://hkpos.dev.maoyan.team","http://show-pos.pub.cs.maoyan.team"));
             environment.setCurlPrePayResult(environment.getCurlPrePayResult().replace("http://hkpos.dev.maoyan.team","http://show-pos.pub.cs.maoyan.team"));
             environment.setCurlPrint(environment.getCurlPrint().replace("http://hkpos.dev.maoyan.team","http://show-pos.pub.cs.maoyan.team"));
+            environment.setCurlUploadPrintResult(environment.getCurlUploadPrintResult().replace("http://hkpos.dev.maoyan.team","http://show-pos.pub.cs.maoyan.team"));
         }else if("STAGE".equals(env)){
             environment.setCurlLogin(environment.getCurlLogin().replace("http://hkpos.dev.maoyan.team","http://show-pos.pub.sta.maoyan.team"));
             environment.setCurlLogout(environment.getCurlLogout().replace("hkpos.dev.maoyan.team","show-pos.pub.sta.maoyan.team"));
@@ -39,6 +40,7 @@ public class GetEnvironment {
             environment.setCurlPrePay(environment.getCurlPrePay().replace("http://hkpos.dev.maoyan.team","http://show-pos.pub.sta.maoyan.team"));
             environment.setCurlPrePayResult(environment.getCurlPrePayResult().replace("http://hkpos.dev.maoyan.team","http://show-pos.pub.sta.maoyan.team"));
             environment.setCurlPrint(environment.getCurlPrint().replace("http://hkpos.dev.maoyan.team","http://show-pos.pub.sta.maoyan.team"));
+            environment.setCurlUploadPrintResult(environment.getCurlUploadPrintResult().replace("http://hkpos.dev.maoyan.team","http://show-pos.pub.sta.maoyan.team"));
         }
         return environment;
     }

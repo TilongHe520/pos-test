@@ -8,31 +8,37 @@ import com.alone.pojo.confirm.ConfirmRequestParams;
 import com.alone.pojo.base.EnvironmentInfo;
 import com.alone.pojo.base.LoginInfo;
 import com.alone.pojo.event.PerformanceInfo;
+import com.alone.pojo.print.UploadPrintInfo;
 import com.alone.util.JsonUtil;
+import com.alone.util.LoginUtil;
 import com.alone.util.SeatUtil;
+import com.alone.util.UploadPrintUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author maoyan
  */
 public class AutoRun {
     public static void main(String[] args) throws InterruptedException, IOException {
-        String loginId = "autoTest";
-        String password = "A123456789A";
-        String terminalId = "138";
-        String terminalCode = "terminal-ejLcb";
         //1352,1636
-        String eventId = "1352";
+        String eventId = "782";
         int posType = PosTypeEnum.valueOf("BUK").getStatus();
-        int stockNum = 3;
+        int stockNum = 1;
 
-        LoginInfo loginInfo = new LoginInfo(loginId, password, terminalId, terminalCode);
+        String environment = "TEST";
+
+        String path="/Users/maoyan/work/pos-test/hk-pos-autoTest/src/main/resources/loginInfo.properties";
+        LoginUtil loginUtil = new LoginUtil();
+        Map<String,LoginInfo> loginInfoMap = loginUtil.getLoginInfo(path);
+
+        LoginInfo loginInfo = loginInfoMap.get(environment);
 
         AutoRun ar = new AutoRun();
-        ar.function("DEV", loginInfo, eventId, posType, stockNum);
+        ar.function(environment, loginInfo, eventId, posType, stockNum);
 
 
     }
@@ -94,6 +100,16 @@ public class AutoRun {
         String printRes = mc.print(transactionNum, cookies);
 
         System.out.println(printRes);
+
+        List<String> ticketIdList = jsonUtil.getValueByKeyFromJson(printRes,"ticketId");
+        String taskId = jsonUtil.getValueByKeyReturnString(printRes,"taskId");
+
+        List<UploadPrintInfo> uploadPrintInfoList = new UploadPrintUtil().getUploadPrintList(taskId,ticketIdList);
+        System.out.println(taskId);
+        System.out.println(ticketIdList);
+        System.out.println(uploadPrintInfoList);
+        String uploadRes = mc.uploadPrintResult(cookies,uploadPrintInfoList,"1");
+        System.out.println(uploadRes);
         Thread.sleep(10 * 1000);
 
 

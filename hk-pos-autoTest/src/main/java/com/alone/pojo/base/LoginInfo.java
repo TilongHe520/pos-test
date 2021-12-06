@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LoginInfo {
-
+    public String userId;
     public String loginId;
     public String password;
     public String terminalId;

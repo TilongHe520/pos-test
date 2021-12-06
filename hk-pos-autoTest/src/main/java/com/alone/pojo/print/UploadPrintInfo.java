@@ -1,5 +1,6 @@
 package com.alone.pojo.print;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -19,6 +20,7 @@ import lombok.NoArgsConstructor;
  */
 @NoArgsConstructor
 @Data
+@AllArgsConstructor
 public class UploadPrintInfo {
     /**
      * 打票任务id

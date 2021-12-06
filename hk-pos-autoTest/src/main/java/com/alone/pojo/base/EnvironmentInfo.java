@@ -22,6 +22,9 @@ public class EnvironmentInfo {
     public String curlQueryTran;
     public String curlEventList;
     public String curlDeliveryMethod;
-
+    /**
+     * 上报打印结果
+     */
+    public String curlUploadPrintResult;
 
 }

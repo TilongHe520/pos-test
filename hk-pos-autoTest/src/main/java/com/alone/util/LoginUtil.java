@@ -47,18 +47,21 @@ public class LoginUtil {
         }
 
         LoginInfo loginInfo_dev = new LoginInfo();
+        loginInfo_dev.setUserId(map_dev.get("dev.userId"));
         loginInfo_dev.setLoginId(map_dev.get("dev.loginId"));
         loginInfo_dev.setPassword(map_dev.get("dev.password"));
         loginInfo_dev.setTerminalCode(map_dev.get("dev.terminalCode"));
         loginInfo_dev.setTerminalId(map_dev.get("dev.terminalId"));
 
         LoginInfo loginInfo_test = new LoginInfo();
+        loginInfo_test.setUserId(map_test.get("test.userId"));
         loginInfo_test.setLoginId(map_test.get("test.loginId"));
         loginInfo_test.setPassword(map_test.get("test.password"));
         loginInfo_test.setTerminalCode(map_test.get("test.terminalCode"));
         loginInfo_test.setTerminalId(map_test.get("test.terminalId"));
 
         LoginInfo loginInfo_stage = new LoginInfo();
+        loginInfo_stage.setUserId(map_stage.get("stage.userId"));
         loginInfo_stage.setLoginId(map_stage.get("stage.loginId"));
         loginInfo_stage.setPassword(map_stage.get("stage.password"));
         loginInfo_stage.setTerminalCode(map_stage.get("stage.terminalCode"));

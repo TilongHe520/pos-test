@@ -41,7 +41,7 @@ public class DemoMain {
         String path = "/Users/maoyan/work/curl.txt";
         EnvironmentInfo environmentInfo = new FileUtil().getCurlObject(path);
 
-        String s = environmentInfo.getCurlAddToCart();
+        String s = environmentInfo.getCurlUploadPrintResult();
         ResolveCurl rc = new ResolveCurl(s);
         CurlParams cp = rc.getParams();
         System.out.println(cp.getUrl());

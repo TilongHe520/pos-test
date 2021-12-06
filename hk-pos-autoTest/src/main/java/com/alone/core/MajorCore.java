@@ -10,6 +10,7 @@ import com.alone.pojo.confirm.ConfirmRequestParams;
 import com.alone.pojo.confirm.ConfirmStockInfo;
 import com.alone.pojo.event.PerformanceInfo;
 import com.alone.pojo.event.PriceZoneInfo;
+import com.alone.pojo.print.UploadPrintInfo;
 import com.alone.util.JsonUtil;
 import com.alone.util.PriceZoneUtil;
 import com.alone.util.ResolveCurl;
@@ -258,6 +259,25 @@ public class MajorCore {
         String data = cp.getData().replace("21111520050102801",transactionNum);
         String response = given().headers(map).body(data).post(cp.getUrl()).asString();
         return response;
+    }
+
+    public String uploadPrintResult(String cookies, List<UploadPrintInfo> uploadPrintInfoList, String posType){
+        ResolveCurl rs = new ResolveCurl(environmentInfo.getCurlUploadPrintResult());
+        CurlParams cp = rs.getParams();
+        Map<String,String> map = cp.getHeader();
+        map.put("Cookie",cookies);
+
+        map.put("x-terminal-code",loginInfo.getTerminalCode());
+        map.put("x-terminal-id",loginInfo.getTerminalId());
+
+        JsonUtil jsonUtil = new JsonUtil();
+        JSONArray jsonArray = (JSONArray) JSONArray.toJSON(uploadPrintInfoList);
+        String data = jsonUtil.updateJsonStr(cp.getData(),jsonArray,"printTicketResultList");
+        data = jsonUtil.updateJsonStr(data,loginInfo.getTerminalCode(),"deviceNum");
+        data = jsonUtil.updateJsonStr(data,posType,"menuType");
+        data = jsonUtil.updateJsonStr(data,loginInfo.getUserId(),"operatorId");
+        String res = given().headers(map).body(data).post(cp.getUrl()).asString();
+        return res;
     }
 
     /**
