@@ -156,7 +156,7 @@ public class MajorCore {
         return response;
     }
 
-    public CartTicketInfo queryCart(int posType, String cookies){
+    public String queryCart(int posType, String cookies){
         ResolveCurl rs = new ResolveCurl(environmentInfo.getCurlQueryCart());
         CurlParams cp = rs.getParams();
         Map<String,String> map = cp.getHeader();
@@ -168,15 +168,8 @@ public class MajorCore {
         JsonUtil jsonUtil = new JsonUtil();
         String jsonStr = jsonUtil.updateJsonStr(cp.getData(),posType,"posType");
         String response = given().headers(map).body(jsonStr).post(cp.getUrl()).asString();
-        CartTicketInfo cartTicketInfo = new CartTicketInfo();
-        cartTicketInfo.setTicketCount(Integer.valueOf(jsonUtil.getValueByKeyFromJson(response,"ticketCount").get(0)).intValue());
-        cartTicketInfo.setTotalTicketCount(Integer.valueOf(jsonUtil.getValueByKeyFromJson(response,"ticketCount").get(0)).intValue());
 
-        cartTicketInfo.setTotalChargeFee(Integer.valueOf(jsonUtil.getValueByKeyFromJson(response,"serviceFee").get(0)).intValue());
-        cartTicketInfo.setTotalPayPrice(Integer.valueOf(jsonUtil.getValueByKeyFromJson(response,"toSumPrice").get(0)).intValue());
-        cartTicketInfo.setTotalTicketPrice(Integer.valueOf(jsonUtil.getValueByKeyFromJson(response,"totalPrice").get(0)).intValue());
-        cartTicketInfo.setMenuType(posType);
-        return cartTicketInfo;
+        return response;
     }
 
     /**
@@ -184,7 +177,7 @@ public class MajorCore {
      * @param
      * @return
      */
-    public  String creatTransaction(String cookies,CartTicketInfo cartTicketInfo){
+    public  String creatTransaction(String cookies,CartTicketInfo cartTicketInfo,JSONArray jsonArray){
         ResolveCurl rs = new ResolveCurl(environmentInfo.getCurlCreatTransaction());
         CurlParams cp = rs.getParams();
         Map<String,String> map = cp.getHeader();
@@ -202,6 +195,7 @@ public class MajorCore {
         requestData =jsonUtil.updateJsonStr(requestData,cartTicketInfo.getTotalTicketCount(),"totalTicketCount");
         requestData = jsonUtil.updateJsonStr(requestData,cartTicketInfo.getTotalTicketPrice(),"totalTicketPrice");
         requestData = jsonUtil.updateJsonStr(requestData,cartTicketInfo.getMenuType(),"menuType");
+        requestData = jsonUtil.updateJsonStr(requestData,jsonArray,"realNameInfoList");
         String response = given().headers(map).body(requestData).post(cp.getUrl()).asString();
         System.out.println(response);
         String transactionId = jsonUtil.getValueByKeyFromJson(response,"transactionId").get(0);

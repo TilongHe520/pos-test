@@ -1,5 +1,6 @@
 package com.alone.main;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alone.core.MajorCore;
 import com.alone.enums.PosTypeEnum;
 import com.alone.environment.GetEnvironment;
@@ -9,10 +10,7 @@ import com.alone.pojo.base.EnvironmentInfo;
 import com.alone.pojo.base.LoginInfo;
 import com.alone.pojo.event.PerformanceInfo;
 import com.alone.pojo.print.UploadPrintInfo;
-import com.alone.util.JsonUtil;
-import com.alone.util.LoginUtil;
-import com.alone.util.SeatUtil;
-import com.alone.util.UploadPrintUtil;
+import com.alone.util.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -88,26 +86,32 @@ public class AutoRun {
             }
         }
 
-        CartTicketInfo cartTicketInfo = mc.queryCart(posType, cookies);
-        System.out.println(cartTicketInfo);
+        String queryCartRes = mc.queryCart(posType, cookies);
 
-        Thread.sleep(3 * 1000);
-        String transactionId = mc.creatTransaction(cookies, cartTicketInfo);
+        JSONArray jsonArray = new RealNameUtil().getTicketRealNameJsonArray(queryCartRes);
+
+        CartTicketInfo cartTicketInfo = new CartTicketInfo();
+        cartTicketInfo.setTicketCount(Integer.valueOf(jsonUtil.getValueByKeyFromJson(queryCartRes,"ticketCount").get(0)).intValue());
+        cartTicketInfo.setTotalTicketCount(Integer.valueOf(jsonUtil.getValueByKeyFromJson(queryCartRes,"ticketCount").get(0)).intValue());
+
+        cartTicketInfo.setTotalChargeFee(Integer.valueOf(jsonUtil.getValueByKeyFromJson(queryCartRes,"serviceFee").get(0)).intValue());
+        cartTicketInfo.setTotalPayPrice(Integer.valueOf(jsonUtil.getValueByKeyFromJson(queryCartRes,"toSumPrice").get(0)).intValue());
+        cartTicketInfo.setTotalTicketPrice(Integer.valueOf(jsonUtil.getValueByKeyFromJson(queryCartRes,"totalPrice").get(0)).intValue());
+        cartTicketInfo.setMenuType(posType);
+
+        Thread.sleep(3*1000);
+        String transactionId = mc.creatTransaction(cookies, cartTicketInfo,jsonArray);
 
         mc.prepayResult(transactionId, cookies);
         String transactionNum = mc.prepay(transactionId, cookies);
 
         String printRes = mc.print(transactionNum, cookies);
 
-        System.out.println(printRes);
-
         List<String> ticketIdList = jsonUtil.getValueByKeyFromJson(printRes,"ticketId");
         String taskId = jsonUtil.getValueByKeyReturnString(printRes,"taskId");
 
         List<UploadPrintInfo> uploadPrintInfoList = new UploadPrintUtil().getUploadPrintList(taskId,ticketIdList);
-        System.out.println(taskId);
-        System.out.println(ticketIdList);
-        System.out.println(uploadPrintInfoList);
+
         String uploadRes = mc.uploadPrintResult(cookies,uploadPrintInfoList,"1");
         System.out.println(uploadRes);
         Thread.sleep(10 * 1000);
