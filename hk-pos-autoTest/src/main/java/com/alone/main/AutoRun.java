@@ -116,6 +116,9 @@ public class AutoRun {
         System.out.println(uploadRes);
         Thread.sleep(10 * 1000);
 
+        String refundRes = mc.refundList(transactionNum,cookies);
+        System.out.println(refundRes);
+
 
         String logoutRes = mc.logout(cookies);
         System.out.println(logoutRes);

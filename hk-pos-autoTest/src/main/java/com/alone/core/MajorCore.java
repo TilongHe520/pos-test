@@ -275,6 +275,26 @@ public class MajorCore {
     }
 
     /**
+     * 退款列表接口
+     * @param tranNum
+     * @param cookies
+     * @return
+     */
+    public  String refundList(String tranNum,String cookies){
+        ResolveCurl rs = new ResolveCurl(environmentInfo.getCurlRefundList());
+        CurlParams cp = rs.getParams();
+        Map<String,String> map = cp.getHeader();
+        map.put("Cookie",cookies);
+        map.put("x-terminal-code",loginInfo.getTerminalCode());
+        map.put("x-terminal-id",loginInfo.getTerminalId());
+
+        JsonUtil jsonUtil = new JsonUtil();
+        String jsonStr = jsonUtil.updateJsonStr(cp.getData(),tranNum,"tranNumber");
+        String res = given().headers(map).body(jsonStr).post(cp.getUrl()).asString();
+        return res;
+    }
+
+    /**
      * 查询交易接口
      * @param tranNum
      * @param cookies

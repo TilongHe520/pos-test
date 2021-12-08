@@ -26,5 +26,9 @@ public class EnvironmentInfo {
      * 上报打印结果
      */
     public String curlUploadPrintResult;
+    /**
+     * 退款查询列表接口
+     */
+    public String curlRefundList;
 
 }
