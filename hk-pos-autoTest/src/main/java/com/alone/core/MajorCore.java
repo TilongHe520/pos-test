@@ -11,6 +11,8 @@ import com.alone.pojo.confirm.ConfirmStockInfo;
 import com.alone.pojo.event.PerformanceInfo;
 import com.alone.pojo.event.PriceZoneInfo;
 import com.alone.pojo.print.UploadPrintInfo;
+import com.alone.pojo.ticket.RefundAddInfo;
+import com.alone.pojo.ticket.TicketInfo;
 import com.alone.util.JsonUtil;
 import com.alone.util.PriceZoneUtil;
 import com.alone.util.ResolveCurl;
@@ -292,6 +294,24 @@ public class MajorCore {
         String jsonStr = jsonUtil.updateJsonStr(cp.getData(),tranNum,"tranNumber");
         String res = given().headers(map).body(jsonStr).post(cp.getUrl()).asString();
         return res;
+    }
+
+    public  String refundAddToCart(RefundAddInfo refundAddInfo, String cookies, int posType){
+        JsonUtil jsonUtil = new JsonUtil();
+        ResolveCurl rs = new ResolveCurl(environmentInfo.getCurlAddToCart());
+        CurlParams cp = rs.getParams();
+
+        Map<String,String> map = cp.getHeader();
+        map.put("Cookie",cookies);
+        map.put("x-terminal-code",loginInfo.getTerminalCode());
+        map.put("x-terminal-id",loginInfo.getTerminalCode());
+        String requestData = jsonUtil.updateJsonStr(cp.getData(),refundAddInfo.getEventId(),"eventIdList");
+        requestData = jsonUtil.updateJsonStr(requestData,refundAddInfo.getPerformanceId(),"performanceIdList");
+        requestData = jsonUtil.updateJsonStr(requestData,refundAddInfo.getTicketInfoList(),"cartSkuInfoList");
+        requestData = jsonUtil.updateJsonStr(requestData,posType,"posType");
+        String response = given().headers(map).body(requestData).post(cp.getUrl()).asString();
+
+        return response;
     }
 
     /**

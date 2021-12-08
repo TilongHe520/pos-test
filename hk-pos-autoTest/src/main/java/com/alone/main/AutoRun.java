@@ -10,6 +10,7 @@ import com.alone.pojo.base.EnvironmentInfo;
 import com.alone.pojo.base.LoginInfo;
 import com.alone.pojo.event.PerformanceInfo;
 import com.alone.pojo.print.UploadPrintInfo;
+import com.alone.pojo.ticket.RefundAddInfo;
 import com.alone.util.*;
 
 import java.io.IOException;
@@ -118,6 +119,11 @@ public class AutoRun {
 
         String refundRes = mc.refundList(transactionNum,cookies);
         System.out.println(refundRes);
+
+        RefundAddInfo refundAddInfo = new RefundUtil().getRefundAddParams(refundRes);
+        System.out.println(refundAddInfo);
+        String res = mc.refundAddToCart(refundAddInfo,cookies,3);
+        System.out.println(res);
 
 
         String logoutRes = mc.logout(cookies);
