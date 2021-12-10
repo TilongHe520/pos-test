@@ -22,6 +22,7 @@ import static io.restassured.RestAssured.given;
 
 import java.io.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @Author: hetilong
@@ -86,8 +87,8 @@ public class DemoMain {
     public void demo() throws IOException {
         String path = "/Users/maoyan/work/curl.txt";
         EnvironmentInfo environmentInfo = new FileUtil().getCurlObject(path);
-
-        String s = environmentInfo.getCurlRefundList();
+        System.out.println(environmentInfo);
+        String s = environmentInfo.getCurlRefundSettle();
         ResolveCurl rc = new ResolveCurl(s);
         CurlParams cp = rc.getParams();
         System.out.println(cp.getData());
@@ -114,5 +115,7 @@ public class DemoMain {
             ticketInfoList.add(ticketInfo);
         }
         System.out.println(ticketInfoList);
+        Map<Integer,List<TicketInfo>> map = ticketInfoList.stream().collect(Collectors.groupingBy(TicketInfo::getPerformanceId));
+        System.out.println(map.size());
     }
 }

@@ -3,10 +3,14 @@ package com.alone.util;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alone.pojo.ticket.RefundAddInfo;
+import com.alone.pojo.ticket.RefundSettleInfo;
 import com.alone.pojo.ticket.TicketInfo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @Author: hetilong
@@ -33,5 +37,29 @@ public class RefundUtil {
         List<String> performanceId = jsonUtil.getValueByKeyFromJson(refundList,"performanceId");
         RefundAddInfo refundAddInfo = new RefundAddInfo(eventId,performanceId,ticketInfoList);
         return refundAddInfo;
+    }
+
+    /**
+     * 获取 退款接口参数
+     * @param refundAddInfo
+     * @return
+     */
+    public List<RefundSettleInfo> getRefundSettleParams(RefundAddInfo refundAddInfo){
+        List<TicketInfo> ticketInfoList = refundAddInfo.getTicketInfoList();
+        //Map<Integer,List<TicketInfo>> map =ticketInfoList.stream().collect(Collectors.groupingBy(TicketInfo::getPerformanceId));
+        Map<Integer, List<Integer>> map= ticketInfoList.stream().
+                collect(Collectors.groupingBy(TicketInfo::getPerformanceId,
+                        Collectors.mapping(TicketInfo::getTicketId, Collectors.toList())));
+        System.out.println(map);
+        List<RefundSettleInfo> refundSettleInfoList = new ArrayList<>();
+        Set<Integer> keys = map.keySet();
+        for (Integer k:keys) {
+            RefundSettleInfo refundSettleInfo = new RefundSettleInfo(k,
+                    0,
+                    false,
+                    map.get(k));
+            refundSettleInfoList.add(refundSettleInfo);
+        }
+        return refundSettleInfoList;
     }
 }

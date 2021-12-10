@@ -11,6 +11,7 @@ import com.alone.pojo.base.LoginInfo;
 import com.alone.pojo.event.PerformanceInfo;
 import com.alone.pojo.print.UploadPrintInfo;
 import com.alone.pojo.ticket.RefundAddInfo;
+import com.alone.pojo.ticket.RefundSettleInfo;
 import com.alone.util.*;
 
 import java.io.IOException;
@@ -120,12 +121,17 @@ public class AutoRun {
         String refundRes = mc.refundList(transactionNum,cookies);
         System.out.println(refundRes);
 
-        RefundAddInfo refundAddInfo = new RefundUtil().getRefundAddParams(refundRes);
+        RefundUtil refundUtil = new RefundUtil();
+        RefundAddInfo refundAddInfo = refundUtil.getRefundAddParams(refundRes);
         System.out.println(refundAddInfo);
         String res = mc.refundAddToCart(refundAddInfo,cookies,3);
         System.out.println(res);
 
-
+        List<RefundSettleInfo> refundSettleInfoList = refundUtil.getRefundSettleParams(refundAddInfo);
+        System.out.println(refundSettleInfoList);
+        String refundSettleRes = mc.refundSettle(refundSettleInfoList,cookies);
+        System.out.println(refundSettleRes);
+        
         String logoutRes = mc.logout(cookies);
         System.out.println(logoutRes);
 

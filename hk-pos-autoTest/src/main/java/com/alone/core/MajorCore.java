@@ -12,6 +12,7 @@ import com.alone.pojo.event.PerformanceInfo;
 import com.alone.pojo.event.PriceZoneInfo;
 import com.alone.pojo.print.UploadPrintInfo;
 import com.alone.pojo.ticket.RefundAddInfo;
+import com.alone.pojo.ticket.RefundSettleInfo;
 import com.alone.pojo.ticket.TicketInfo;
 import com.alone.util.JsonUtil;
 import com.alone.util.PriceZoneUtil;
@@ -304,11 +305,33 @@ public class MajorCore {
         Map<String,String> map = cp.getHeader();
         map.put("Cookie",cookies);
         map.put("x-terminal-code",loginInfo.getTerminalCode());
-        map.put("x-terminal-id",loginInfo.getTerminalCode());
+        map.put("x-terminal-id",loginInfo.getTerminalId());
         String requestData = jsonUtil.updateJsonStr(cp.getData(),refundAddInfo.getEventId(),"eventIdList");
         requestData = jsonUtil.updateJsonStr(requestData,refundAddInfo.getPerformanceId(),"performanceIdList");
         requestData = jsonUtil.updateJsonStr(requestData,refundAddInfo.getTicketInfoList(),"cartSkuInfoList");
         requestData = jsonUtil.updateJsonStr(requestData,posType,"posType");
+        String response = given().headers(map).body(requestData).post(cp.getUrl()).asString();
+
+        return response;
+    }
+
+    /**
+     * 退款结算接口
+     * @param refundSettleInfoList
+     * @param cookies
+     * @return
+     */
+    public  String refundSettle(List<RefundSettleInfo> refundSettleInfoList, String cookies){
+        JsonUtil jsonUtil = new JsonUtil();
+        ResolveCurl rs = new ResolveCurl(environmentInfo.getCurlRefundSettle());
+        CurlParams cp = rs.getParams();
+
+        Map<String,String> map = cp.getHeader();
+        map.put("Cookie",cookies);
+        map.put("x-terminal-code",loginInfo.getTerminalCode());
+        map.put("x-terminal-id",loginInfo.getTerminalId());
+        String requestData = jsonUtil.updateJsonStr(cp.getData(),refundSettleInfoList,"performanceReleaseRequests");
+        requestData = jsonUtil.updateJsonStr(requestData,loginInfo.getTerminalCode(),"terminalCode");
         String response = given().headers(map).body(requestData).post(cp.getUrl()).asString();
 
         return response;
