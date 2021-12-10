@@ -47,6 +47,7 @@ public class RefundUtil {
     public List<RefundSettleInfo> getRefundSettleParams(RefundAddInfo refundAddInfo){
         List<TicketInfo> ticketInfoList = refundAddInfo.getTicketInfoList();
         //Map<Integer,List<TicketInfo>> map =ticketInfoList.stream().collect(Collectors.groupingBy(TicketInfo::getPerformanceId));
+        //谢坤哥提供方法
         Map<Integer, List<Integer>> map= ticketInfoList.stream().
                 collect(Collectors.groupingBy(TicketInfo::getPerformanceId,
                         Collectors.mapping(TicketInfo::getTicketId, Collectors.toList())));

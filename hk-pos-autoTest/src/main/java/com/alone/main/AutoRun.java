@@ -117,7 +117,8 @@ public class AutoRun {
         String uploadRes = mc.uploadPrintResult(cookies,uploadPrintInfoList,"1");
         System.out.println(uploadRes);
         Thread.sleep(10 * 1000);
-
+        String queryTranRes = mc.queryTran(transactionNum,cookies);
+        System.out.println(queryTranRes);
         String refundRes = mc.refundList(transactionNum,cookies);
         System.out.println(refundRes);
 
@@ -131,6 +132,9 @@ public class AutoRun {
         System.out.println(refundSettleInfoList);
         String refundSettleRes = mc.refundSettle(refundSettleInfoList,cookies);
         System.out.println(refundSettleRes);
+        Thread.sleep(5 * 1000);
+        String queryTranRes1 = mc.queryTran(refundSettleRes,cookies);
+        System.out.println(queryTranRes1);
         
         String logoutRes = mc.logout(cookies);
         System.out.println(logoutRes);

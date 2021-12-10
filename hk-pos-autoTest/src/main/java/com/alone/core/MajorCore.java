@@ -333,8 +333,8 @@ public class MajorCore {
         String requestData = jsonUtil.updateJsonStr(cp.getData(),refundSettleInfoList,"performanceReleaseRequests");
         requestData = jsonUtil.updateJsonStr(requestData,loginInfo.getTerminalCode(),"terminalCode");
         String response = given().headers(map).body(requestData).post(cp.getUrl()).asString();
-
-        return response;
+        String transactionNum = jsonUtil.getValueByKeyReturnString(response,"transactionNo");
+        return transactionNum;
     }
 
     /**
@@ -354,7 +354,8 @@ public class MajorCore {
         JsonUtil jsonUtil = new JsonUtil();
         String jsonStr = jsonUtil.updateJsonStr(cp.getData(),tranNum,"tranNum");
         String res = given().headers(map).body(jsonStr).post(cp.getUrl()).asString();
-        return jsonUtil.getValueByKeyFromJson(jsonStr,"data").toString();
+        System.out.println(res);
+        return jsonUtil.getValueByKeyFromJson(res,"data").toString();
     }
 
 
