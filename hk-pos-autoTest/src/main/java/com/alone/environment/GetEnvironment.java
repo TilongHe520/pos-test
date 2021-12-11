@@ -32,6 +32,8 @@ public class GetEnvironment {
             environment.setCurlRefundList(environment.getCurlRefundList().replace("http://hkpos.dev.maoyan.team","http://show-pos.pub.cs.maoyan.team"));
             environment.setCurlRefundSettle(environment.getCurlRefundSettle().replace("http://hkpos.dev.maoyan.team","http://show-pos.pub.cs.maoyan.team"));
             environment.setCurlQueryTran(environment.getCurlQueryTran().replace("http://hkpos.dev.maoyan.team","http://show-pos.pub.cs.maoyan.team"));
+            environment.setCurlSummary(environment.getCurlSummary().replace("http://hkpos.dev.maoyan.team","http://show-pos.pub.cs.maoyan.team"));
+
         }else if("STAGE".equals(env)){
             environment.setCurlLogin(environment.getCurlLogin().replace("http://hkpos.dev.maoyan.team","http://show-pos.pub.sta.maoyan.team"));
             environment.setCurlLogout(environment.getCurlLogout().replace("hkpos.dev.maoyan.team","show-pos.pub.sta.maoyan.team"));
@@ -47,6 +49,8 @@ public class GetEnvironment {
             environment.setCurlRefundList(environment.getCurlRefundList().replace("http://hkpos.dev.maoyan.team","http://show-pos.pub.sta.maoyan.team"));
             environment.setCurlRefundSettle(environment.getCurlRefundSettle().replace("http://hkpos.dev.maoyan.team","http://show-pos.pub.sta.maoyan.team"));
             environment.setCurlQueryTran(environment.getCurlQueryTran().replace("http://hkpos.dev.maoyan.team","http://show-pos.pub.sta.maoyan.team"));
+            environment.setCurlSummary(environment.getCurlSummary().replace("http://hkpos.dev.maoyan.team","http://show-pos.pub.sta.maoyan.team"));
+
         }
         return environment;
     }

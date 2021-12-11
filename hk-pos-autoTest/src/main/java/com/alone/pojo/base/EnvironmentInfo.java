@@ -34,5 +34,9 @@ public class EnvironmentInfo {
      * 退款接口
      */
     public String curlRefundSettle;
+    /**
+     * 交易总数预览
+     */
+    public String curlSummary;
 
 }

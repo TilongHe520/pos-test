@@ -24,7 +24,7 @@ import java.util.Map;
  */
 public class AutoRun {
     public static void main(String[] args) throws InterruptedException, IOException {
-        //1352,1636
+
         String eventId = "782";
         int posType = PosTypeEnum.valueOf("BUK").getStatus();
         int stockNum = 1;
@@ -55,89 +55,94 @@ public class AutoRun {
 
         //登录获取token
         String cookies = mc.login();
+        try{
+            List<PerformanceInfo> performanceList = mc.detail(eventId, cookies);
+            System.out.println(performanceList);
 
-        List<PerformanceInfo> performanceList = mc.detail(eventId, cookies);
-        System.out.println(performanceList);
-
-        List<List<ConfirmRequestParams>> confirmStockInfoList = new ArrayList<>();
-        for (PerformanceInfo p : performanceList) {
-            long currentTime = System.currentTimeMillis();
-            if (currentTime < p.getSaleEndDate()) {
-                List<ConfirmRequestParams> confirmStockInfos = mc.detail(eventId, cookies, p.getPerformanceId(), posType, stockNum);
-                confirmStockInfoList.add(confirmStockInfos);
-            }
-
-        }
-        System.out.println(confirmStockInfoList);
-
-        for (List<ConfirmRequestParams> confirmRequestParams : confirmStockInfoList) {
-            for (ConfirmRequestParams con : confirmRequestParams) {
-                String confirmRes = mc.confirmStock(con, cookies);
-                if (jsonUtil.getValueByKeyReturnString(confirmRes, "seatDTOList") != null) {
-                    String requestData = seatUtil.addRequestParams(confirmRes, loginInfo.getTerminalCode(), posType,con.getEventId());
-                    String res2 = mc.addToCart(requestData, cookies);
-                    System.out.println(res2);
-                }
-                if (jsonUtil.getValueByKeyReturnString(confirmRes, "noSeatDTOList") != null) {
-
-                    String requestData = seatUtil.addRequestParams(confirmRes, posType, loginInfo.getTerminalCode(),con.getEventId());
-                    String res2 = mc.addToCart(requestData, cookies);
-                    System.out.println(res2);
+            List<List<ConfirmRequestParams>> confirmStockInfoList = new ArrayList<>();
+            for (PerformanceInfo p : performanceList) {
+                long currentTime = System.currentTimeMillis();
+                if (currentTime < p.getSaleEndDate()) {
+                    List<ConfirmRequestParams> confirmStockInfos = mc.detail(eventId, cookies, p.getPerformanceId(), posType, stockNum);
+                    confirmStockInfoList.add(confirmStockInfos);
                 }
 
             }
+            System.out.println(confirmStockInfoList);
+
+            for (List<ConfirmRequestParams> confirmRequestParams : confirmStockInfoList) {
+                for (ConfirmRequestParams con : confirmRequestParams) {
+                    String confirmRes = mc.confirmStock(con, cookies);
+                    if (jsonUtil.getValueByKeyReturnString(confirmRes, "seatDTOList") != null) {
+                        String requestData = seatUtil.addRequestParams(confirmRes, loginInfo.getTerminalCode(), posType,con.getEventId());
+                        String res2 = mc.addToCart(requestData, cookies);
+                        System.out.println(res2);
+                    }
+                    if (jsonUtil.getValueByKeyReturnString(confirmRes, "noSeatDTOList") != null) {
+
+                        String requestData = seatUtil.addRequestParams(confirmRes, posType, loginInfo.getTerminalCode(),con.getEventId());
+                        String res2 = mc.addToCart(requestData, cookies);
+                        System.out.println(res2);
+                    }
+
+                }
+            }
+
+            String queryCartRes = mc.queryCart(posType, cookies);
+
+            JSONArray jsonArray = new RealNameUtil().getTicketRealNameJsonArray(queryCartRes);
+
+            CartTicketInfo cartTicketInfo = new CartTicketInfo();
+            cartTicketInfo.setTicketCount(Integer.valueOf(jsonUtil.getValueByKeyFromJson(queryCartRes,"ticketCount").get(0)).intValue());
+            cartTicketInfo.setTotalTicketCount(Integer.valueOf(jsonUtil.getValueByKeyFromJson(queryCartRes,"ticketCount").get(0)).intValue());
+
+            cartTicketInfo.setTotalChargeFee(Integer.valueOf(jsonUtil.getValueByKeyFromJson(queryCartRes,"serviceFee").get(0)).intValue());
+            cartTicketInfo.setTotalPayPrice(Integer.valueOf(jsonUtil.getValueByKeyFromJson(queryCartRes,"toSumPrice").get(0)).intValue());
+            cartTicketInfo.setTotalTicketPrice(Integer.valueOf(jsonUtil.getValueByKeyFromJson(queryCartRes,"totalPrice").get(0)).intValue());
+            cartTicketInfo.setMenuType(posType);
+
+            Thread.sleep(3*1000);
+            String transactionId = mc.creatTransaction(cookies, cartTicketInfo,jsonArray);
+
+            mc.prepayResult(transactionId, cookies);
+            String transactionNum = mc.prepay(transactionId, cookies);
+
+            String printRes = mc.print(transactionNum, cookies);
+
+            List<String> ticketIdList = jsonUtil.getValueByKeyFromJson(printRes,"ticketId");
+            String taskId = jsonUtil.getValueByKeyReturnString(printRes,"taskId");
+
+            List<UploadPrintInfo> uploadPrintInfoList = new UploadPrintUtil().getUploadPrintList(taskId,ticketIdList);
+
+            String uploadRes = mc.uploadPrintResult(cookies,uploadPrintInfoList,"1");
+            System.out.println(uploadRes);
+            Thread.sleep(10 * 1000);
+            String queryTranRes = mc.queryTran(transactionNum,cookies);
+            System.out.println(queryTranRes);
+            String refundRes = mc.refundList(transactionNum,cookies);
+            System.out.println(refundRes);
+
+            RefundUtil refundUtil = new RefundUtil();
+            RefundAddInfo refundAddInfo = refundUtil.getRefundAddParams(refundRes);
+            System.out.println(refundAddInfo);
+            String res = mc.refundAddToCart(refundAddInfo,cookies,3);
+            System.out.println(res);
+
+            List<RefundSettleInfo> refundSettleInfoList = refundUtil.getRefundSettleParams(refundAddInfo);
+            System.out.println(refundSettleInfoList);
+            String refundSettleRes = mc.refundSettle(refundSettleInfoList,cookies);
+            System.out.println(refundSettleRes);
+            Thread.sleep(5 * 1000);
+            String queryTranRes1 = mc.queryTran(refundSettleRes,cookies);
+            System.out.println(queryTranRes1);
+            Thread.sleep(5 * 1000);
+            String summaryRes = mc.summary(cookies);
+            System.out.println(summaryRes);
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            String logoutRes = mc.logout(cookies);
+            System.out.println(logoutRes);
         }
-
-        String queryCartRes = mc.queryCart(posType, cookies);
-
-        JSONArray jsonArray = new RealNameUtil().getTicketRealNameJsonArray(queryCartRes);
-
-        CartTicketInfo cartTicketInfo = new CartTicketInfo();
-        cartTicketInfo.setTicketCount(Integer.valueOf(jsonUtil.getValueByKeyFromJson(queryCartRes,"ticketCount").get(0)).intValue());
-        cartTicketInfo.setTotalTicketCount(Integer.valueOf(jsonUtil.getValueByKeyFromJson(queryCartRes,"ticketCount").get(0)).intValue());
-
-        cartTicketInfo.setTotalChargeFee(Integer.valueOf(jsonUtil.getValueByKeyFromJson(queryCartRes,"serviceFee").get(0)).intValue());
-        cartTicketInfo.setTotalPayPrice(Integer.valueOf(jsonUtil.getValueByKeyFromJson(queryCartRes,"toSumPrice").get(0)).intValue());
-        cartTicketInfo.setTotalTicketPrice(Integer.valueOf(jsonUtil.getValueByKeyFromJson(queryCartRes,"totalPrice").get(0)).intValue());
-        cartTicketInfo.setMenuType(posType);
-
-        Thread.sleep(3*1000);
-        String transactionId = mc.creatTransaction(cookies, cartTicketInfo,jsonArray);
-
-        mc.prepayResult(transactionId, cookies);
-        String transactionNum = mc.prepay(transactionId, cookies);
-
-        String printRes = mc.print(transactionNum, cookies);
-
-        List<String> ticketIdList = jsonUtil.getValueByKeyFromJson(printRes,"ticketId");
-        String taskId = jsonUtil.getValueByKeyReturnString(printRes,"taskId");
-
-        List<UploadPrintInfo> uploadPrintInfoList = new UploadPrintUtil().getUploadPrintList(taskId,ticketIdList);
-
-        String uploadRes = mc.uploadPrintResult(cookies,uploadPrintInfoList,"1");
-        System.out.println(uploadRes);
-        Thread.sleep(10 * 1000);
-        String queryTranRes = mc.queryTran(transactionNum,cookies);
-        System.out.println(queryTranRes);
-        String refundRes = mc.refundList(transactionNum,cookies);
-        System.out.println(refundRes);
-
-        RefundUtil refundUtil = new RefundUtil();
-        RefundAddInfo refundAddInfo = refundUtil.getRefundAddParams(refundRes);
-        System.out.println(refundAddInfo);
-        String res = mc.refundAddToCart(refundAddInfo,cookies,3);
-        System.out.println(res);
-
-        List<RefundSettleInfo> refundSettleInfoList = refundUtil.getRefundSettleParams(refundAddInfo);
-        System.out.println(refundSettleInfoList);
-        String refundSettleRes = mc.refundSettle(refundSettleInfoList,cookies);
-        System.out.println(refundSettleRes);
-        Thread.sleep(5 * 1000);
-        String queryTranRes1 = mc.queryTran(refundSettleRes,cookies);
-        System.out.println(queryTranRes1);
-        
-        String logoutRes = mc.logout(cookies);
-        System.out.println(logoutRes);
-
     }
 }

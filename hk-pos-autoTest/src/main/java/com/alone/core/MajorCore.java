@@ -354,9 +354,20 @@ public class MajorCore {
         JsonUtil jsonUtil = new JsonUtil();
         String jsonStr = jsonUtil.updateJsonStr(cp.getData(),tranNum,"tranNum");
         String res = given().headers(map).body(jsonStr).post(cp.getUrl()).asString();
-        System.out.println(res);
         return jsonUtil.getValueByKeyFromJson(res,"data").toString();
     }
 
+    public  String summary(String cookies){
+        ResolveCurl rs = new ResolveCurl(environmentInfo.getCurlSummary());
+        CurlParams cp = rs.getParams();
+        Map<String,String> map = cp.getHeader();
+        map.put("Cookie",cookies);
+        map.put("x-terminal-code",loginInfo.getTerminalCode());
+        map.put("x-terminal-id",loginInfo.getTerminalId());
 
+        JsonUtil jsonUtil = new JsonUtil();
+        String jsonStr = jsonUtil.updateJsonStr(cp.getData(),loginInfo.getTerminalId(),"terminalId");
+        String res = given().headers(map).body(jsonStr).post(cp.getUrl()).asString();
+        return res;
+    }
 }
