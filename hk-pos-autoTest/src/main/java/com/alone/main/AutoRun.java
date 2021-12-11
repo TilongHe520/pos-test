@@ -10,6 +10,7 @@ import com.alone.pojo.base.EnvironmentInfo;
 import com.alone.pojo.base.LoginInfo;
 import com.alone.pojo.event.PerformanceInfo;
 import com.alone.pojo.print.UploadPrintInfo;
+import com.alone.pojo.serviceCharge.PoundageTypeInfo;
 import com.alone.pojo.ticket.RefundAddInfo;
 import com.alone.pojo.ticket.RefundSettleInfo;
 import com.alone.util.*;
@@ -132,12 +133,32 @@ public class AutoRun {
             System.out.println(refundSettleInfoList);
             String refundSettleRes = mc.refundSettle(refundSettleInfoList,cookies);
             System.out.println(refundSettleRes);
-            Thread.sleep(5 * 1000);
+            Thread.sleep(10 * 1000);
             String queryTranRes1 = mc.queryTran(refundSettleRes,cookies);
             System.out.println(queryTranRes1);
-            Thread.sleep(5 * 1000);
+            Thread.sleep(10 * 1000);
             String summaryRes = mc.summary(cookies);
             System.out.println(summaryRes);
+
+            List<PoundageTypeInfo> poundageTypeInfoList = mc.listPoundage(cookies);
+            for (PoundageTypeInfo p:poundageTypeInfoList
+                 ) {
+                if (!"Change".equals(p.getCode())){
+                   String ptRes =  mc.creatPoundageTran(p,cookies);
+                   transactionId = jsonUtil.getValueByKeyReturnString(ptRes,"transactionId");
+                   transactionNum = jsonUtil.getValueByKeyReturnString(ptRes,"transactionNo");
+                   mc.prepayResult(transactionId,cookies);
+                   mc.prepay(transactionId,cookies);
+                   printRes = mc.printChargeTicket(transactionNum,cookies);
+                   ticketIdList = jsonUtil.getValueByKeyFromJson(printRes,"ticketId");
+                   taskId = jsonUtil.getValueByKeyReturnString(printRes,"taskId");
+
+                   uploadPrintInfoList = new UploadPrintUtil().getUploadPrintList(taskId,ticketIdList);
+
+                   uploadRes = mc.uploadPrintResult(cookies,uploadPrintInfoList,"20");
+                   System.out.println(uploadRes);
+                }
+            }
         }catch (Exception e){
             e.printStackTrace();
         }finally {

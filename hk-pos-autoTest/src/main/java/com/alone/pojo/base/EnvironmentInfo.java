@@ -38,5 +38,16 @@ public class EnvironmentInfo {
      * 交易总数预览
      */
     public String curlSummary;
-
+    /**
+     * 收取手续费
+     */
+    public String curlListPoundage;
+    /**
+     * 创建手续费交易
+     */
+    public String curlCreatePoundageTran;
+    /**
+     *  打印手续费票版
+     */
+    public String curlPrintChargeTicket;
 }

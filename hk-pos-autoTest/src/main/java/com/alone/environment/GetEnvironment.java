@@ -33,6 +33,9 @@ public class GetEnvironment {
             environment.setCurlRefundSettle(environment.getCurlRefundSettle().replace("http://hkpos.dev.maoyan.team","http://show-pos.pub.cs.maoyan.team"));
             environment.setCurlQueryTran(environment.getCurlQueryTran().replace("http://hkpos.dev.maoyan.team","http://show-pos.pub.cs.maoyan.team"));
             environment.setCurlSummary(environment.getCurlSummary().replace("http://hkpos.dev.maoyan.team","http://show-pos.pub.cs.maoyan.team"));
+            environment.setCurlListPoundage(environment.getCurlListPoundage().replace("http://hkpos.dev.maoyan.team","http://show-pos.pub.cs.maoyan.team"));
+            environment.setCurlCreatePoundageTran(environment.getCurlCreatePoundageTran().replace("http://hkpos.dev.maoyan.team","http://show-pos.pub.cs.maoyan.team"));
+            environment.setCurlPrintChargeTicket(environment.getCurlPrintChargeTicket().replace("http://hkpos.dev.maoyan.team","http://show-pos.pub.cs.maoyan.team"));
 
         }else if("STAGE".equals(env)){
             environment.setCurlLogin(environment.getCurlLogin().replace("http://hkpos.dev.maoyan.team","http://show-pos.pub.sta.maoyan.team"));
@@ -50,6 +53,8 @@ public class GetEnvironment {
             environment.setCurlRefundSettle(environment.getCurlRefundSettle().replace("http://hkpos.dev.maoyan.team","http://show-pos.pub.sta.maoyan.team"));
             environment.setCurlQueryTran(environment.getCurlQueryTran().replace("http://hkpos.dev.maoyan.team","http://show-pos.pub.sta.maoyan.team"));
             environment.setCurlSummary(environment.getCurlSummary().replace("http://hkpos.dev.maoyan.team","http://show-pos.pub.sta.maoyan.team"));
+            environment.setCurlCreatePoundageTran(environment.getCurlCreatePoundageTran().replace("http://hkpos.dev.maoyan.team","http://show-pos.pub.sta.maoyan.team"));
+            environment.setCurlPrintChargeTicket(environment.getCurlPrintChargeTicket().replace("http://hkpos.dev.maoyan.team","http://show-pos.pub.sta.maoyan.team"));
 
         }
         return environment;

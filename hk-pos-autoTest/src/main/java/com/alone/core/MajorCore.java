@@ -11,9 +11,9 @@ import com.alone.pojo.confirm.ConfirmStockInfo;
 import com.alone.pojo.event.PerformanceInfo;
 import com.alone.pojo.event.PriceZoneInfo;
 import com.alone.pojo.print.UploadPrintInfo;
+import com.alone.pojo.serviceCharge.PoundageTypeInfo;
 import com.alone.pojo.ticket.RefundAddInfo;
 import com.alone.pojo.ticket.RefundSettleInfo;
-import com.alone.pojo.ticket.TicketInfo;
 import com.alone.util.JsonUtil;
 import com.alone.util.PriceZoneUtil;
 import com.alone.util.ResolveCurl;
@@ -370,4 +370,73 @@ public class MajorCore {
         String res = given().headers(map).body(jsonStr).post(cp.getUrl()).asString();
         return res;
     }
+
+    /**
+     * 收取手续费
+     * @param cookies
+     * @return
+     */
+    public  List<PoundageTypeInfo> listPoundage(String cookies){
+        ResolveCurl rs = new ResolveCurl(environmentInfo.getCurlListPoundage());
+        CurlParams cp = rs.getParams();
+        Map<String,String> map = cp.getHeader();
+        map.put("Cookie",cookies);
+        map.put("x-terminal-code",loginInfo.getTerminalCode());
+        map.put("x-terminal-id",loginInfo.getTerminalId());
+
+        String res = given().headers(map).body(cp.getData()).post(cp.getUrl()).asString();
+        JsonUtil jsonUtil = new JsonUtil();
+        String data = jsonUtil.getValueByKeyReturnString(res,"data");
+        JSONArray jsonArray = JSONArray.parseArray(data);
+        List<PoundageTypeInfo> poundageTypeInfoList = new ArrayList<>();
+        for (int i=0;i<jsonArray.size();i++){
+            PoundageTypeInfo poundageTypeInfo = JSONObject.parseObject(jsonArray.getString(i),PoundageTypeInfo.class);
+            poundageTypeInfoList.add(poundageTypeInfo);
+        }
+        return poundageTypeInfoList;
+    }
+    /**
+     * 收取手续费
+     * @param cookies
+     * @return
+     */
+    public  String creatPoundageTran(PoundageTypeInfo poundageTypeInfo,String cookies){
+        ResolveCurl rs = new ResolveCurl(environmentInfo.getCurlCreatePoundageTran());
+        CurlParams cp = rs.getParams();
+        Map<String,String> map = cp.getHeader();
+        map.put("Cookie",cookies);
+        map.put("x-terminal-code",loginInfo.getTerminalCode());
+        map.put("x-terminal-id",loginInfo.getTerminalId());
+
+        JsonUtil jsonUtil = new JsonUtil();
+        String data = jsonUtil.updateJsonStr(cp.getData(),poundageTypeInfo.getType(),"poundageType");
+        data = jsonUtil.updateJsonStr(data,poundageTypeInfo.getPricePerTicket(),"totalAmount");
+        data = jsonUtil.updateJsonStr(data,loginInfo.getTerminalCode(),"terminalCode");
+        String res = given().headers(map).body(data).post(cp.getUrl()).asString();
+
+        return res;
+    }
+
+    /**
+     * 打印手续费票版
+     * @param transactionNum
+     * @param cookies
+     * @return
+     */
+    public  String printChargeTicket(String transactionNum,String cookies){
+        ResolveCurl rs = new ResolveCurl(environmentInfo.getCurlPrintChargeTicket());
+        CurlParams cp = rs.getParams();
+        Map<String,String> map = cp.getHeader();
+        map.put("Cookie",cookies);
+        map.put("x-terminal-code",loginInfo.getTerminalCode());
+        map.put("x-terminal-id",loginInfo.getTerminalId());
+
+        JsonUtil jsonUtil = new JsonUtil();
+        String data = jsonUtil.updateJsonStr(cp.getData(),loginInfo.getTerminalCode(),"deviceNum");
+        data = data.replace("21121118241091701",transactionNum);
+        String res = given().headers(map).body(data).post(cp.getUrl()).asString();
+
+        return res;
+    }
+
 }
