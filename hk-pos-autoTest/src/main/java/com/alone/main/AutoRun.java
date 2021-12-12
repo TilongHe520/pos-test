@@ -2,6 +2,7 @@ package com.alone.main;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alone.core.MajorCore;
+import com.alone.core.UpgradeTicket;
 import com.alone.enums.PosTypeEnum;
 import com.alone.environment.GetEnvironment;
 import com.alone.pojo.cart.CartTicketInfo;
@@ -120,6 +121,9 @@ public class AutoRun {
             Thread.sleep(10 * 1000);
             String queryTranRes = mc.queryTran(transactionNum,cookies);
             System.out.println(queryTranRes);
+            UpgradeTicket upgradeTicket = new UpgradeTicket(cookies,environmentInfo,loginInfo);
+            String ListUpgradeTicketRes = upgradeTicket.getTicketInfo(transactionNum,12);
+            System.out.println(ListUpgradeTicketRes);
             String refundRes = mc.refundList(transactionNum,cookies);
             System.out.println(refundRes);
 

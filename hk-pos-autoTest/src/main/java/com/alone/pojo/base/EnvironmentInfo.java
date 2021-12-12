@@ -50,4 +50,9 @@ public class EnvironmentInfo {
      *  打印手续费票版
      */
     public String curlPrintChargeTicket;
+
+    /**
+     * 升级与换票
+     */
+    public String curlListTicketEx;
 }
