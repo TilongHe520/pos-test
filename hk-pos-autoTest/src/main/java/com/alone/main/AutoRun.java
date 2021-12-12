@@ -116,14 +116,18 @@ public class AutoRun {
 
             List<UploadPrintInfo> uploadPrintInfoList = new UploadPrintUtil().getUploadPrintList(taskId,ticketIdList);
 
-            String uploadRes = mc.uploadPrintResult(cookies,uploadPrintInfoList,"1");
+            String uploadRes = mc.uploadPrintResult(cookies,uploadPrintInfoList,String.valueOf(posType));
             System.out.println(uploadRes);
             Thread.sleep(10 * 1000);
             String queryTranRes = mc.queryTran(transactionNum,cookies);
             System.out.println(queryTranRes);
-            UpgradeTicket upgradeTicket = new UpgradeTicket(cookies,environmentInfo,loginInfo);
-            String ListUpgradeTicketRes = upgradeTicket.getTicketInfo(transactionNum,12);
-            System.out.println(ListUpgradeTicketRes);
+            //升级门票
+            UpgradeTicket upgradeTicket = new UpgradeTicket(cookies,environmentInfo,loginInfo,12);
+            List<String> ticketId = upgradeTicket.getTicketInfo(transactionNum);
+            String checkExchangeRes = upgradeTicket.checkExchange(ticketId);
+            System.out.println("==========="+checkExchangeRes);
+
+            //离线退款
             String refundRes = mc.refundList(transactionNum,cookies);
             System.out.println(refundRes);
 

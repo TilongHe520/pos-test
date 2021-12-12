@@ -87,7 +87,7 @@ public class DemoMain {
     public void demo() throws IOException {
         String path = "/Users/maoyan/work/curl.txt";
         EnvironmentInfo environmentInfo = new FileUtil().getCurlObject(path);
-        String s = environmentInfo.getCurlListTicketEx();
+        String s = environmentInfo.getCurlCheckExchange();
         ResolveCurl rc = new ResolveCurl(s);
         CurlParams cp = rc.getParams();
         System.out.println(cp.getData());
@@ -116,5 +116,43 @@ public class DemoMain {
         System.out.println(ticketInfoList);
         Map<Integer,List<TicketInfo>> map = ticketInfoList.stream().collect(Collectors.groupingBy(TicketInfo::getPerformanceId));
         System.out.println(map.size());
+    }
+
+    @Test
+    public void test03(){
+        String curl = "curl 'http://hkpos.dev.maoyan.team/api/transaction/exchange/getTicketInfo?locale=zh_CN' \\\n" +
+                "  -H 'Proxy-Connection: keep-alive' \\\n" +
+                "  -H 'Pragma: no-cache' \\\n" +
+                "  -H 'Cache-Control: no-cache' \\\n" +
+                "  -H 'Accept: application/json' \\\n" +
+                "  -H 'x-terminal-code: terminal-test' \\\n" +
+                "  -H 'x-terminal-id: 91' \\\n" +
+                "  -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.93 Safari/537.36' \\\n" +
+                "  -H 'Content-Type: application/json;charset=UTF-8' \\\n" +
+                "  -H 'Origin: http://hkpos.dev.maoyan.team' \\\n" +
+                "  -H 'Referer: http://hkpos.dev.maoyan.team/seller/upgrade_tickets' \\\n" +
+                "  -H 'Accept-Language: zh-CN,zh;q=0.9' \\\n" +
+                "  -H 'Cookie: pos-token=eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJoa1Nob3ciLCJpYXQiOjE2MzkyMDk3MjIsInN5c3RlbUNvZGUiOjIsInJlbmV3YWwiOmZhbHNlLCJsb2dpbkZsYWciOiIxMzYyMTYzOTIwOTcyMjU4OSIsInRlcm1pbmFsSWQiOjkxLCJ0ZXJtaW5hbENvZGUiOiJ0ZXJtaW5hbC10ZXN0IiwidXNlcklkIjoxMzZ9.X5GFlCoNVU0f57Zu2_Z-BKiGZyCSDJgLFKiOhNlUrlo; locale=zh-CN' \\\n" +
+                "  --data-raw '{\"tranNumber\":\"21121210460795501\",\"queryType\":12}' \\\n" +
+                "  --compressed \\\n" +
+                "  --insecure";
+
+        ResolveCurl rs = new ResolveCurl(curl);
+        CurlParams cp = rs.getParams();
+        String res = given().headers(cp.getHeader()).body(cp.getData()).post(cp.getUrl()).asString();
+        System.out.println(res);
+
+        JsonUtil jsonUtil = new JsonUtil();
+        String responseList = jsonUtil.getValueByKeyReturnString(res,"posTicketTransactionResponseList");
+        JSONArray jsonArray = JSONArray.parseArray(responseList);
+        String ticketId = null;
+        for (Object o:jsonArray) {
+            if(jsonUtil.getValueByKeyReturnString(o.toString(),"ticketTypeCode").equals("STU")){
+                ticketId = jsonUtil.getValueByKeyReturnString(o.toString(),"id");
+                break;
+            }
+        }
+
+        System.out.println(ticketId);
     }
 }

@@ -199,6 +199,7 @@ public class MajorCore {
         requestData = jsonUtil.updateJsonStr(requestData,cartTicketInfo.getTotalTicketPrice(),"totalTicketPrice");
         requestData = jsonUtil.updateJsonStr(requestData,cartTicketInfo.getMenuType(),"menuType");
         requestData = jsonUtil.updateJsonStr(requestData,jsonArray,"realNameInfoList");
+        System.out.println(requestData);
         String response = given().headers(map).body(requestData).post(cp.getUrl()).asString();
         System.out.println(response);
         String transactionId = jsonUtil.getValueByKeyFromJson(response,"transactionId").get(0);

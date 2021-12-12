@@ -55,4 +55,9 @@ public class EnvironmentInfo {
      * 升级与换票
      */
     public String curlListTicketEx;
+
+    /**
+     * 升级票校验
+     */
+    public String curlCheckExchange;
 }
