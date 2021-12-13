@@ -126,6 +126,7 @@ public class AutoRun {
             List<String> ticketId = upgradeTicket.getTicketInfo(transactionNum);
             String checkExchangeRes = upgradeTicket.checkExchange(ticketId);
             System.out.println("==========="+checkExchangeRes);
+            upgradeTicket.creatOrder(mc);
 
             //离线退款
             String refundRes = mc.refundList(transactionNum,cookies);

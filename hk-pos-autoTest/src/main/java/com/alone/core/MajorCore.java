@@ -207,6 +207,28 @@ public class MajorCore {
     }
 
     /**
+     * 创建交易接口
+     * @param
+     * @return
+     */
+    public  String creatTransaction(String cookies,String requestData){
+        ResolveCurl rs = new ResolveCurl(environmentInfo.getCurlCreatTransaction());
+        CurlParams cp = rs.getParams();
+        Map<String,String> map = cp.getHeader();
+        map.put("Cookie",cookies);
+
+        map.put("x-terminal-code",loginInfo.getTerminalCode());
+        map.put("x-terminal-id",loginInfo.getTerminalId());
+
+        JsonUtil jsonUtil = new JsonUtil();
+
+        String response = given().headers(map).body(requestData).post(cp.getUrl()).asString();
+        System.out.println(response);
+        String transactionId = jsonUtil.getValueByKeyFromJson(response,"transactionId").get(0);
+        return transactionId;
+    }
+
+    /**
      * 预支付结果接口
      */
     public  String prepayResult(String transactionId,String cookies){
