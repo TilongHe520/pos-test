@@ -2,6 +2,7 @@ package com.alone.main;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alone.core.MajorCore;
+import com.alone.core.ReprintTicket;
 import com.alone.core.UpgradeTicket;
 import com.alone.enums.PosTypeEnum;
 import com.alone.environment.GetEnvironment;
@@ -127,6 +128,19 @@ public class AutoRun {
             String checkExchangeRes = upgradeTicket.checkExchange(ticketId);
             System.out.println("==========="+checkExchangeRes);
             upgradeTicket.creatOrder(mc);
+
+            //门票重印
+            ReprintTicket reprintTicket = new ReprintTicket(environmentInfo,loginInfo,cookies,17);
+            String tranNumRes = reprintTicket.getReprintTicketInfo();
+            List<UploadPrintInfo> uploadPrintInfoList1 = reprintTicket.print(tranNumRes);
+            String reprintUploadRes = reprintTicket.uploadPrintResult(uploadPrintInfoList1);
+            System.out.println("%%%%%%%"+reprintUploadRes);
+
+            //换票
+            UpgradeTicket ticketExchange = new UpgradeTicket(cookies,environmentInfo,loginInfo,11);
+            List<String> ticketIdExc = ticketExchange.getTicketInfo(transactionNum);
+            String ExchangeRes = ticketExchange.checkExchange(ticketIdExc);
+            System.out.println("========"+ExchangeRes);
 
             //离线退款
             String refundRes = mc.refundList(transactionNum,cookies);

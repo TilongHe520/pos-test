@@ -1,0 +1,87 @@
+package com.alone.core;
+
+import com.alibaba.fastjson.JSONArray;
+import com.alone.common.BaseCommon;
+import com.alone.pojo.base.CurlParams;
+import com.alone.pojo.base.EnvironmentInfo;
+import com.alone.pojo.base.LoginInfo;
+import com.alone.pojo.print.UploadPrintInfo;
+import com.alone.util.JsonUtil;
+import com.alone.util.ResolveCurl;
+import com.alone.util.UploadPrintUtil;
+
+import java.util.List;
+import java.util.Map;
+
+import static io.restassured.RestAssured.given;
+
+/**
+ * @Author: hetilong
+ * @Date: 2021/12/13 20:02
+ */
+public class ReprintTicket extends BaseCommon {
+    public String cookies;
+    public int posType;
+    public ReprintTicket(EnvironmentInfo environmentInfo, LoginInfo loginInfo,String cookies,int posType) {
+        super(environmentInfo, loginInfo);
+        this.cookies = cookies;
+        this.posType = posType;
+    }
+
+    public String getReprintTicketInfo(){
+        ResolveCurl rs = new ResolveCurl(environmentInfo.getCurlReprintTicket());
+        CurlParams cp = rs.getParams();
+
+        Map<String,String> map = cp.getHeader();
+        map.put("x-terminal-code",loginInfo.getTerminalCode());
+        map.put("x-terminal-id",loginInfo.getTerminalId());
+        map.put("Cookie",cookies);
+
+        JsonUtil jsonUtil = new JsonUtil();
+        String jsonStr = jsonUtil.updateJsonStr(cp.getData(),loginInfo.getTerminalCode(),"terminalCode");
+        String res = given().headers(map).body(jsonStr).post(cp.getUrl()).asString();
+        String tranNum = jsonUtil.getValueByKeyReturnString(res,"tranNum");
+        System.out.println(res);
+        return tranNum;
+    }
+
+    public List<UploadPrintInfo> print(String transactionNum){
+        ResolveCurl rs = new ResolveCurl(environmentInfo.getCurlPrint());
+        CurlParams cp = rs.getParams();
+        Map<String,String> map = cp.getHeader();
+        map.put("Cookie",cookies);
+
+        map.put("x-terminal-code",loginInfo.getTerminalCode());
+        map.put("x-terminal-id",loginInfo.getTerminalId());
+
+        String data = cp.getData().replace("21111520050102801",transactionNum);
+        String response = given().headers(map).body(data).post(cp.getUrl()).asString();
+        System.out.println(response);
+        JsonUtil jsonUtil = new JsonUtil();
+        List<String> ticketIdList = jsonUtil.getValueByKeyFromJson(response,"ticketId");
+        String taskId = jsonUtil.getValueByKeyReturnString(response,"taskId");
+
+        List<UploadPrintInfo> uploadPrintInfoList = new UploadPrintUtil().getUploadPrintList(taskId,ticketIdList);
+        System.out.println(uploadPrintInfoList);
+        return uploadPrintInfoList;
+    }
+
+    public String uploadPrintResult(List<UploadPrintInfo> uploadPrintInfoList){
+        ResolveCurl rs = new ResolveCurl(environmentInfo.getCurlUploadPrintResult());
+        CurlParams cp = rs.getParams();
+        Map<String,String> map = cp.getHeader();
+        map.put("Cookie",cookies);
+
+        map.put("x-terminal-code",loginInfo.getTerminalCode());
+        map.put("x-terminal-id",loginInfo.getTerminalId());
+
+        JsonUtil jsonUtil = new JsonUtil();
+        JSONArray jsonArray = (JSONArray) JSONArray.toJSON(uploadPrintInfoList);
+        String data = jsonUtil.updateJsonStr(cp.getData(),jsonArray,"printTicketResultList");
+        data = jsonUtil.updateJsonStr(data,loginInfo.getTerminalCode(),"deviceNum");
+        data = jsonUtil.updateJsonStr(data,posType,"menuType");
+        data = jsonUtil.updateJsonStr(data,loginInfo.getUserId(),"operatorId");
+        String res = given().headers(map).body(data).post(cp.getUrl()).asString();
+        return res;
+    }
+}

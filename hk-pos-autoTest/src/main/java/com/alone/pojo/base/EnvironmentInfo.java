@@ -60,4 +60,9 @@ public class EnvironmentInfo {
      * 升级票校验
      */
     public String curlCheckExchange;
+
+    /**
+     * 门票重印
+     */
+    public String curlReprintTicket;
 }
