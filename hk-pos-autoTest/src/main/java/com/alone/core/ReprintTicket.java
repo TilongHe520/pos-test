@@ -42,6 +42,7 @@ public class ReprintTicket extends BaseCommon {
         String res = given().headers(map).body(jsonStr).post(cp.getUrl()).asString();
         String tranNum = jsonUtil.getValueByKeyReturnString(res,"tranNum");
         System.out.println(res);
+        System.out.println(tranNum);
         return tranNum;
     }
 
@@ -54,10 +55,13 @@ public class ReprintTicket extends BaseCommon {
         map.put("x-terminal-code",loginInfo.getTerminalCode());
         map.put("x-terminal-id",loginInfo.getTerminalId());
 
+        JsonUtil jsonUtil = new JsonUtil();
         String data = cp.getData().replace("21111520050102801",transactionNum);
+        data = jsonUtil.updateJsonStr(data,posType,"menuType");
+        data = jsonUtil.updateJsonStr(data,loginInfo.getTerminalCode(),"deviceNum");
+        data = jsonUtil.updateJsonStr(data,loginInfo.getLoginId(),"operatorName");
         String response = given().headers(map).body(data).post(cp.getUrl()).asString();
         System.out.println(response);
-        JsonUtil jsonUtil = new JsonUtil();
         List<String> ticketIdList = jsonUtil.getValueByKeyFromJson(response,"ticketId");
         String taskId = jsonUtil.getValueByKeyReturnString(response,"taskId");
 
