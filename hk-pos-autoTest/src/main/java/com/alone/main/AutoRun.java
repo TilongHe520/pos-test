@@ -1,6 +1,7 @@
 package com.alone.main;
 
 import com.alibaba.fastjson.JSONArray;
+import com.alone.core.ChangeHolder;
 import com.alone.core.MajorCore;
 import com.alone.core.ReprintTicket;
 import com.alone.core.UpgradeTicket;
@@ -28,10 +29,12 @@ import java.util.Map;
 public class AutoRun {
     public static void main(String[] args) throws InterruptedException, IOException {
 
+        //String eventId = "13263";
         String eventId = "782";
         int posType = PosTypeEnum.valueOf("BUK").getStatus();
         int stockNum = 1;
 
+        //String environment = "STAGE";
         String environment = "TEST";
 
         String path="/Users/maoyan/work/pos-test/hk-pos-autoTest/src/main/resources/loginInfo.properties";
@@ -123,13 +126,22 @@ public class AutoRun {
             String queryTranRes = mc.queryTran(transactionNum,cookies);
             System.out.println(queryTranRes);
             //升级门票
+            System.out.println("=======升级门票========");
             UpgradeTicket upgradeTicket = new UpgradeTicket(cookies,environmentInfo,loginInfo,12);
             List<String> ticketId = upgradeTicket.getTicketInfo(transactionNum);
             String checkExchangeRes = upgradeTicket.checkExchange(ticketId);
             System.out.println("==========="+checkExchangeRes);
             upgradeTicket.creatOrder(mc);
 
+            //更改持票人
+            System.out.println("=======更改持票人========");
+            ChangeHolder changeHolder = new ChangeHolder(environmentInfo,loginInfo,cookies,3);
+            List<String> changeHolderIds = changeHolder.getChangeHolderInfo(transactionNum);
+            String changeHolderRes = changeHolder.checkHolder(changeHolderIds);
+            System.out.println("==========="+changeHolderRes);
+
             //门票重印
+            System.out.println("=======门票重印========");
             ReprintTicket reprintTicket = new ReprintTicket(environmentInfo,loginInfo,cookies,17);
             String tranNumRes = reprintTicket.getReprintTicketInfo();
             List<UploadPrintInfo> uploadPrintInfoList1 = reprintTicket.print(tranNumRes);

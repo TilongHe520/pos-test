@@ -17,7 +17,7 @@ public class GetEnvironment {
         EnvironmentInfo environment = fileUtil.getCurlObject(path);
         String devTarget = "http://hkpos.dev.maoyan.team";
         String testTarget = "http://show-pos.pub.cs.maoyan.team";
-        String stageTarget = "http://show-pos.pub.sta.maoyan.team";
+        String stageTarget = "http://hk-pos.pub.sta.maoyan.team";
         if ("DEV".equals(env)){
             return environment;
         }else if ("TEST".equals(env)){
@@ -42,10 +42,12 @@ public class GetEnvironment {
             environment.setCurlListTicketEx(environment.getCurlListTicketEx().replace(devTarget,testTarget));
             environment.setCurlCheckExchange(environment.getCurlCheckExchange().replace(devTarget,testTarget));
             environment.setCurlReprintTicket(environment.getCurlReprintTicket().replace(devTarget,testTarget));
+            environment.setCurlChangeHolder(environment.getCurlChangeHolder().replace(devTarget,testTarget));
+            environment.setCurlCheckHolder(environment.getCurlCheckHolder().replace(devTarget,testTarget));
 
         }else if("STAGE".equals(env)){
             environment.setCurlLogin(environment.getCurlLogin().replace(devTarget,stageTarget));
-            environment.setCurlLogout(environment.getCurlLogout().replace("hkpos.dev.maoyan.team","show-pos.pub.sta.maoyan.team"));
+            environment.setCurlLogout(environment.getCurlLogout().replace("hkpos.dev.maoyan.team","hk-pos.pub.sta.maoyan.team"));
             environment.setCurlDetail(environment.getCurlDetail().replace(devTarget,stageTarget));
             environment.setCurlConfirmStock(environment.getCurlConfirmStock().replace(devTarget,stageTarget));
             environment.setCurlAddToCart(environment.getCurlAddToCart().replace(devTarget,stageTarget));
@@ -59,10 +61,14 @@ public class GetEnvironment {
             environment.setCurlRefundSettle(environment.getCurlRefundSettle().replace(devTarget,stageTarget));
             environment.setCurlQueryTran(environment.getCurlQueryTran().replace(devTarget,stageTarget));
             environment.setCurlSummary(environment.getCurlSummary().replace(devTarget,stageTarget));
+            environment.setCurlListPoundage(environment.getCurlListPoundage().replace(devTarget,stageTarget));
             environment.setCurlCreatePoundageTran(environment.getCurlCreatePoundageTran().replace(devTarget,stageTarget));
             environment.setCurlPrintChargeTicket(environment.getCurlPrintChargeTicket().replace(devTarget,stageTarget));
             environment.setCurlListTicketEx(environment.getCurlListTicketEx().replace(devTarget,stageTarget));
+            environment.setCurlCheckExchange(environment.getCurlCheckExchange().replace(devTarget,stageTarget));
             environment.setCurlReprintTicket(environment.getCurlReprintTicket().replace(devTarget,stageTarget));
+            environment.setCurlChangeHolder(environment.getCurlChangeHolder().replace(devTarget,stageTarget));
+            environment.setCurlCheckHolder(environment.getCurlCheckHolder().replace(devTarget,stageTarget));
 
         }
         return environment;

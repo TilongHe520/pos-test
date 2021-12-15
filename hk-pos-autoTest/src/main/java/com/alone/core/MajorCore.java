@@ -408,6 +408,7 @@ public class MajorCore {
         map.put("x-terminal-id",loginInfo.getTerminalId());
 
         String res = given().headers(map).body(cp.getData()).post(cp.getUrl()).asString();
+        System.out.println(res);
         JsonUtil jsonUtil = new JsonUtil();
         String data = jsonUtil.getValueByKeyReturnString(res,"data");
         JSONArray jsonArray = JSONArray.parseArray(data);

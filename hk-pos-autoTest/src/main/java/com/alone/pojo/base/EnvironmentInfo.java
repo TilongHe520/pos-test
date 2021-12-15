@@ -65,4 +65,14 @@ public class EnvironmentInfo {
      * 门票重印
      */
     public String curlReprintTicket;
+
+    /**
+     * 更改持票人
+     */
+    public String curlChangeHolder;
+
+    /**
+     * 更改持票人校验
+     */
+    public String curlCheckHolder;
 }

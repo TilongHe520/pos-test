@@ -87,7 +87,7 @@ public class DemoMain {
     public void demo() throws IOException {
         String path = "/Users/maoyan/work/curl.txt";
         EnvironmentInfo environmentInfo = new FileUtil().getCurlObject(path);
-        String s = environmentInfo.getCurlReprintTicket();
+        String s = environmentInfo.getCurlCheckHolder();
         ResolveCurl rc = new ResolveCurl(s);
         CurlParams cp = rc.getParams();
         System.out.println(cp.getData());
