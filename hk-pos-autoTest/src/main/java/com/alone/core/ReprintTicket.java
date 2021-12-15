@@ -20,12 +20,8 @@ import static io.restassured.RestAssured.given;
  * @Date: 2021/12/13 20:02
  */
 public class ReprintTicket extends BaseCommon {
-    public String cookies;
-    public int posType;
     public ReprintTicket(EnvironmentInfo environmentInfo, LoginInfo loginInfo,String cookies,int posType) {
-        super(environmentInfo, loginInfo);
-        this.cookies = cookies;
-        this.posType = posType;
+        super(environmentInfo, loginInfo,cookies,posType);
     }
 
     public String getReprintTicketInfo(){

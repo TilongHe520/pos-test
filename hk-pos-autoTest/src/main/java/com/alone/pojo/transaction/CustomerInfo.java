@@ -19,6 +19,14 @@ public class CustomerInfo implements Serializable {
         this.contactNumber = contactNumber;
     }
 
+    public CustomerInfo(String contactNumber,String payAccount,String payAccountHash,String expireMonth,String expireYear){
+        this.contactNumber = contactNumber;
+        this.payAccount = payAccount;
+        this.payAccountHash = payAccountHash;
+        this.expireMonth = expireMonth;
+        this.expireYear = expireYear;
+    }
+
     /**
      * 联系人邮件地址
      */
@@ -119,4 +127,14 @@ public class CustomerInfo implements Serializable {
      * 支付账号hash值
      */
     private String payAccountHash;
+
+    /**
+     * 过期月份
+     */
+    private String expireMonth;
+
+    /**
+     * 过期年份
+     */
+    private String expireYear;
 }
