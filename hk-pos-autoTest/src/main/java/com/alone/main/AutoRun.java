@@ -135,10 +135,11 @@ public class AutoRun {
 
             //更改持票人
             System.out.println("=======更改持票人========");
-            ChangeHolder changeHolder = new ChangeHolder(environmentInfo,loginInfo,cookies,3);
+            ChangeHolder changeHolder = new ChangeHolder(environmentInfo,loginInfo,cookies,13);
             List<String> changeHolderIds = changeHolder.getChangeHolderInfo(transactionNum);
             String changeHolderRes = changeHolder.checkHolder(changeHolderIds);
             System.out.println("==========="+changeHolderRes);
+            changeHolder.creatOrder(mc);
 
             //门票重印
             System.out.println("=======门票重印========");

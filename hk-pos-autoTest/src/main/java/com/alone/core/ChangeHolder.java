@@ -1,12 +1,19 @@
 package com.alone.core;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alone.common.BaseCommon;
 import com.alone.pojo.base.CurlParams;
 import com.alone.pojo.base.EnvironmentInfo;
 import com.alone.pojo.base.LoginInfo;
+import com.alone.pojo.cart.TicketRealNameInfo;
+import com.alone.pojo.print.UploadPrintInfo;
+import com.alone.pojo.transaction.CreatTranParams;
+import com.alone.pojo.transaction.CustomerInfo;
 import com.alone.util.JsonUtil;
+import com.alone.util.RealNameUtil;
 import com.alone.util.ResolveCurl;
+import com.alone.util.UploadPrintUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,5 +89,50 @@ public class ChangeHolder extends BaseCommon {
         return res;
     }
 
+    /**
+     * 更改持票人交易
+     * @param mc
+     */
+    public void creatOrder(MajorCore mc){
+        JsonUtil jsonUtil = new JsonUtil();
+        String queryCartRes = mc.queryCart(posType, cookies);
+
+        List<TicketRealNameInfo> t = new RealNameUtil().getTicketRealList(queryCartRes);
+
+        CreatTranParams creatTranParams = new CreatTranParams(
+                0,
+                0,
+                0,
+                posType,
+                Integer.valueOf(jsonUtil.getValueByKeyReturnString(queryCartRes,"totalPrice")),
+                0,
+                Integer.valueOf(jsonUtil.getValueByKeyReturnString(queryCartRes,"serviceFee")),
+                Integer.valueOf(jsonUtil.getValueByKeyReturnString(queryCartRes,"ticketCount")),
+                Integer.valueOf(jsonUtil.getValueByKeyReturnString(queryCartRes,"ticketCount")),
+                "Admin_outlet",
+                "MY",
+                loginInfo.getTerminalCode(),
+                "CASH",
+                true,
+                2,
+                t,
+                new CustomerInfo("12345678908")
+        );
+
+        String jsonStr = JSON.toJSONString(creatTranParams);
+        String transactionId = mc.creatTransaction(cookies,jsonStr);
+        mc.prepayResult(transactionId, cookies);
+        String transactionNum = mc.prepay(transactionId, cookies);
+
+        String printRes = mc.print(transactionNum, cookies);
+
+        List<String> ticketIdList = jsonUtil.getValueByKeyFromJson(printRes,"ticketId");
+        String taskId = jsonUtil.getValueByKeyReturnString(printRes,"taskId");
+
+        List<UploadPrintInfo> uploadPrintInfoList = new UploadPrintUtil().getUploadPrintList(taskId,ticketIdList);
+
+        String uploadRes = mc.uploadPrintResult(cookies,uploadPrintInfoList,String.valueOf(posType));
+        System.out.println(uploadRes);
+    }
 
 }
