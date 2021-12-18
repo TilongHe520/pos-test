@@ -1,12 +1,10 @@
 package com.alone.main;
 
 import com.alibaba.fastjson.JSONArray;
-import com.alone.core.ChangeHolder;
-import com.alone.core.MajorCore;
-import com.alone.core.ReprintTicket;
-import com.alone.core.UpgradeTicket;
+import com.alone.core.*;
 import com.alone.enums.PosTypeEnum;
 import com.alone.environment.GetEnvironment;
+import com.alone.pojo.cart.CartSkuInfo;
 import com.alone.pojo.cart.CartTicketInfo;
 import com.alone.pojo.confirm.ConfirmRequestParams;
 import com.alone.pojo.base.EnvironmentInfo;
@@ -30,12 +28,14 @@ public class AutoRun {
     public static void main(String[] args) throws InterruptedException, IOException {
 
         //String eventId = "13263";
-        String eventId = "782";
+        //String eventId = "782";
+        String eventId = "837";
         int posType = PosTypeEnum.valueOf("BUK").getStatus();
         int stockNum = 1;
 
         //String environment = "STAGE";
-        String environment = "TEST";
+        //String environment = "TEST";
+        String environment = "DEV";
 
         String path="/Users/maoyan/work/pos-test/hk-pos-autoTest/src/main/resources/loginInfo.properties";
         LoginUtil loginUtil = new LoginUtil();
@@ -133,6 +133,18 @@ public class AutoRun {
             System.out.println("==========="+checkExchangeRes);
             upgradeTicket.creatOrder(mc);
 
+            //换票
+            System.out.println("=======换票========");
+            ExchangeTicket ticketExchange = new ExchangeTicket(environmentInfo,loginInfo,cookies,11);
+            List<String> ticketIdExc = ticketExchange.getTicketInfo(transactionNum);
+            CartSkuInfo cartSkuInfo = ticketExchange.checkExchange(ticketIdExc);
+            List<ConfirmRequestParams> confirmRequestParamsList = ticketExchange.exchangeDetail(cartSkuInfo,
+                    eventId);
+            String requestData = ticketExchange.confirmStock(cartSkuInfo,confirmRequestParamsList.get(0));
+            String addRes = ticketExchange.addToCart(requestData);
+            ticketExchange.creatOrder(mc);
+            System.out.println("========"+addRes);
+
             //更改持票人
             System.out.println("=======更改持票人========");
             ChangeHolder changeHolder = new ChangeHolder(environmentInfo,loginInfo,cookies,13);
@@ -149,11 +161,6 @@ public class AutoRun {
             String reprintUploadRes = reprintTicket.uploadPrintResult(uploadPrintInfoList1);
             System.out.println("%%%%%%%"+reprintUploadRes);
 
-            //换票
-            UpgradeTicket ticketExchange = new UpgradeTicket(cookies,environmentInfo,loginInfo,11);
-            List<String> ticketIdExc = ticketExchange.getTicketInfo(transactionNum);
-            String ExchangeRes = ticketExchange.checkExchange(ticketIdExc);
-            System.out.println("========"+ExchangeRes);
 
             //离线退款
             String refundRes = mc.refundList(transactionNum,cookies);

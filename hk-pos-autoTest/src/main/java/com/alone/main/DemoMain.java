@@ -1,10 +1,12 @@
 package com.alone.main;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alone.pojo.base.CurlParams;
 import com.alone.pojo.base.EnvironmentInfo;
 import com.alone.pojo.base.LoginInfo;
+import com.alone.pojo.cart.CartSkuInfo;
 import com.alone.pojo.ticket.TicketInfo;
 import com.alone.util.FileUtil;
 import com.alone.util.JsonUtil;
@@ -154,5 +156,22 @@ public class DemoMain {
         }
 
         System.out.println(ticketId);
+    }
+
+    @Test
+    public void test04(){
+        String jsonStr = "{\"code\":200000,\"msg\":null,\"data\":{\"checkPass\":true,\"checkMsgCode\":null,\"checkMsg\":null,\"cartItemRequest\":{\"serialNum\":null,\"eventIdList\":[13001],\"performanceIdList\":[27707],\"cartSkuInfoList\":[{\"uniqueId\":\"27707.39.0.7.67.1\",\"seatId\":1451886,\"pohId\":137396,\"priceTableId\":0,\"needSeat\":true,\"section\":null,\"eventId\":13001,\"row\":\"D\",\"col\":\"14\",\"gate\":null,\"priceZoneId\":39,\"priceZoneCode\":\"C\",\"priceZoneNameEn\":null,\"priceZoneNameSc\":null,\"priceZoneNameTc\":null,\"color\":null,\"originalTicketTypeId\":1,\"originalTicketTypeNameEn\":null,\"originalTicketTypeNameTc\":null,\"originalTicketTypeNameSc\":null,\"originalTicketTypeCode\":\"STAN\",\"ticketTypeNature\":0,\"originalPrice\":1000,\"showTicketTypeId\":0,\"showTicketTypeCode\":null,\"showTicketTypeNameEn\":null,\"showTicketTypeNameTc\":null,\"showTicketTypeNameSc\":null,\"showPrice\":0,\"stackablePrice\":0,\"performanceId\":27707,\"gift\":false,\"discountCalcDesc\":null,\"ticketId\":27440,\"blockTypeId\":0,\"needRealName\":false,\"firstName\":null,\"lastName\":null,\"refundType\":0,\"rowSequence\":0,\"seatSequence\":0,\"seatType\":1,\"discountCalcDescList\":null,\"seatTypeId\":null,\"reserveTicket\":false,\"exchange\":false,\"oldTicketPrice\":1000,\"openSeatTypeDTO\":null,\"swapInTicket\":false,\"showSpecialInfo\":false,\"specialInfoEn\":null,\"specialInfoTc\":null,\"specialInfoSc\":null,\"seatRemark\":null,\"baseTicketType\":0,\"uuid\":null,\"pohName\":null,\"bestPriceDiscountCalcDesc\":null,\"bulkPurchase\":false,\"memberList\":null,\"promotionCodeList\":null,\"paymentMethod\":null,\"toTicketTypeCode\":null,\"pohUuid\":null,\"originalPriceZoneId\":null,\"a8TerminalId\":null}],\"memberList\":null,\"promotionCodeList\":null,\"posType\":11,\"paymentMethod\":null,\"cardNo\":null,\"deliveryMethodCode\":null,\"destination\":null,\"registerNum\":null,\"token\":null,\"salesChannel\":0,\"discountCouponList\":null,\"terminalCode\":null,\"bulkPurchase\":false,\"ticketNature\":1,\"editCart\":false}},\"paging\":null,\"tracing\":null,\"success\":true}";
+        JsonUtil jsonUtil = new JsonUtil();
+        JSONArray s = JSONArray.parseArray(jsonUtil.getValueByKeyFromJson(jsonStr,"cartSkuInfoList").get(0));
+        System.out.println(s);
+        CartSkuInfo cartSkuInfo = JSONObject.parseObject(s.getString(0),CartSkuInfo.class);
+        List<CartSkuInfo> cartSkuInfos = new ArrayList<>();
+        cartSkuInfos.add(cartSkuInfo);
+        JSONArray jsonArray = (JSONArray) JSONArray.toJSON(cartSkuInfos);
+        System.out.println(jsonArray);
+        String data= JSONObject.toJSON(cartSkuInfo).toString();
+        Map map = JSON.parseObject(data,Map.class);
+        String data1 = JSONObject.toJSONString(map);
+        System.out.println(data1);
     }
 }

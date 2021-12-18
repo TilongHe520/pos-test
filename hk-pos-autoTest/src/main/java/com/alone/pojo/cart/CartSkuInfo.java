@@ -40,6 +40,8 @@ public class CartSkuInfo {
     public boolean needSeat;
     public String seatId;
     public boolean needRealName;
+    public int ticketId;
+    public int oldTicketPrice;
     public CartSkuInfo(){
         this.swapInTicket=false;
         this.seatType=2;
@@ -58,5 +60,6 @@ public class CartSkuInfo {
         this.needSeat=false;
         this.seatId=null;
         this.needRealName=false;
+        this.ticketId=0;
     }
 }

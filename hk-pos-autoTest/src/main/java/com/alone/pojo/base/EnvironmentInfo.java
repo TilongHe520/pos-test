@@ -9,43 +9,101 @@ import lombok.Data;
 @Data
 public class EnvironmentInfo {
 
+    /**
+     * 登录
+     */
     public String curlLogin;
+
+    /**
+     * 登出
+     */
     public String curlLogout;
+
+    /**
+     * 详情页
+     */
     public String curlDetail;
+
+    /**
+     * 详情页选择票的数量
+     */
     public String curlConfirmStock;
+
+    /**
+     * 选座页加入购物车
+     */
     public String curlAddToCart;
+
+    /**
+     * 查询购物车
+     */
     public String curlQueryCart;
+
+    /**
+     * 常见交易
+     */
     public String curlCreatTransaction;
+
+    /**
+     * 预支付结果接口
+     */
     public String curlPrePayResult;
+
+    /**
+     * 预支付接口
+     */
     public String curlPrePay;
+
+    /**
+     * 打票接口
+     */
     public String curlPrint;
+
+    /**
+     * 查询交易接口
+     */
     public String curlQueryTran;
+
+    /**
+     * 项目列表接口
+     */
     public String curlEventList;
+
+    /**
+     * 送付方式接口
+     */
     public String curlDeliveryMethod;
+
     /**
      * 上报打印结果
      */
     public String curlUploadPrintResult;
+
     /**
      * 退款查询列表接口
      */
     public String curlRefundList;
+
     /**
      * 退款接口
      */
     public String curlRefundSettle;
+
     /**
      * 交易总数预览
      */
     public String curlSummary;
+
     /**
      * 收取手续费
      */
     public String curlListPoundage;
+
     /**
      * 创建手续费交易
      */
     public String curlCreatePoundageTran;
+    
     /**
      *  打印手续费票版
      */
@@ -75,4 +133,9 @@ public class EnvironmentInfo {
      * 更改持票人校验
      */
     public String curlCheckHolder;
+
+    /**
+     * 查询支付方式接口
+     */
+    public String curlPayChannel;
 }

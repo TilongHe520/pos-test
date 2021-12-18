@@ -6,6 +6,7 @@ import com.alone.pojo.confirm.ConfirmRequestParams;
 import com.alone.pojo.confirm.ConfirmStockInfo;
 import com.alone.pojo.event.PriceZoneInfo;
 import com.alone.pojo.event.TicketTypeInfo;
+import com.alone.pojo.ticket.TicketInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,6 +65,42 @@ public class PriceZoneUtil {
                         posType);
 
                 confirmRequestParamsList.add(confirmRequestParams);
+            }
+        }
+        return confirmRequestParamsList;
+    }
+
+    /**
+     * 获取换票的ticketType
+     * @param priceZoneInfos
+     * @param eventId
+     * @param performanceId
+     * @param posType
+     * @param stockNum
+     * @return
+     */
+    public List<ConfirmRequestParams> getExchangeConfirmStockInfos(List<PriceZoneInfo> priceZoneInfos,String eventId,int performanceId,int posType,int stockNum,int price){
+
+        List<ConfirmRequestParams> confirmRequestParamsList = new ArrayList<>();
+        for (PriceZoneInfo priceZone: priceZoneInfos) {
+            for (TicketTypeInfo ticketType:priceZone.getTicketTypeList()) {
+                if (ticketType.getPrice()>=price){
+                    ConfirmStockInfo confirmStockInfo = new ConfirmStockInfo(priceZone.getPriceZoneId(),
+                            0,
+                            1,
+                            ticketType.getTicketTypeId(),
+                            ticketType.getTicketTypeNature(),
+                            stockNum,
+                            1);
+
+                    ConfirmRequestParams confirmRequestParams = new ConfirmRequestParams(eventId,
+                            performanceId,
+                            confirmStockInfo,
+                            posType);
+
+                    confirmRequestParamsList.add(confirmRequestParams);
+                    break;
+                }
             }
         }
         return confirmRequestParamsList;

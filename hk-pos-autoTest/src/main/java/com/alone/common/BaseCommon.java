@@ -33,7 +33,7 @@ public class BaseCommon {
     public void creatOrder(MajorCore mc){
         JsonUtil jsonUtil = new JsonUtil();
         String queryCartRes = mc.queryCart(posType, cookies);
-
+        System.out.println(queryCartRes);
         List<TicketRealNameInfo> t = new RealNameUtil().getTicketRealList(queryCartRes);
 
         CreatTranParams creatTranParams = new CreatTranParams(
