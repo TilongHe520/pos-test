@@ -11,17 +11,13 @@ import java.security.NoSuchAlgorithmException;
  * @version 1.0
  */
 public class EncryptSha256Util {
-    public static void main(String[] args) {
-        String sha256Str = getSha256Str("6250947000000014");
-        System.out.println(sha256Str);
-    }
     /**
      * sha256加密
      *
      * @param str 要加密的字符串
      * @return 加密后的字符串
      */
-    public static String getSha256Str(String str) {
+    public String getSha256Str(String str) {
         MessageDigest messageDigest;
         String encodeStr = "";
         try {
@@ -40,7 +36,7 @@ public class EncryptSha256Util {
      * @param bytes 字节码
      * @return 加密后的字符串
      */
-    private static String byte2Hex(byte[] bytes) {
+    private  String byte2Hex(byte[] bytes) {
         StringBuilder stringBuilder = new StringBuilder();
         String temp;
         for (byte aByte : bytes) {

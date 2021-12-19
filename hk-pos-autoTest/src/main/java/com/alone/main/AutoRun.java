@@ -163,6 +163,7 @@ public class AutoRun {
 
 
             //离线退款
+            System.out.println("=====离线退款====");
             String refundRes = mc.refundList(transactionNum,cookies);
             System.out.println(refundRes);
 
@@ -183,6 +184,7 @@ public class AutoRun {
             String summaryRes = mc.summary(cookies);
             System.out.println(summaryRes);
 
+            System.out.println("====收取手续费====");
             List<PoundageTypeInfo> poundageTypeInfoList = mc.listPoundage(cookies);
             for (PoundageTypeInfo p:poundageTypeInfoList
                  ) {
@@ -205,6 +207,7 @@ public class AutoRun {
         }catch (Exception e){
             e.printStackTrace();
         }finally {
+            System.out.println("=====登出======");
             String logoutRes = mc.logout(cookies);
             System.out.println(logoutRes);
         }

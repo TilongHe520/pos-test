@@ -8,6 +8,10 @@ import lombok.Data;
  */
 @Data
 public class EnvironmentInfo {
+    /**
+     * 查询terminal信息
+     */
+    public String curlTerminalQuery;
 
     /**
      * 登录

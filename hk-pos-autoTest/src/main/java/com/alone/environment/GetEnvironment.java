@@ -21,6 +21,7 @@ public class GetEnvironment {
         if ("DEV".equals(env)){
             return environment;
         }else if ("TEST".equals(env)){
+            environment.setCurlTerminalQuery(environment.getCurlTerminalQuery().replace(devTarget,testTarget));
             environment.setCurlLogin(environment.getCurlLogin().replace(devTarget,testTarget));
             environment.setCurlLogout(environment.getCurlLogout().replace("hkpos.dev.maoyan.team","show-pos.pub.cs.maoyan.team"));
             environment.setCurlDetail(environment.getCurlDetail().replace(devTarget,testTarget));
@@ -46,6 +47,7 @@ public class GetEnvironment {
             environment.setCurlCheckHolder(environment.getCurlCheckHolder().replace(devTarget,testTarget));
 
         }else if("STAGE".equals(env)){
+            environment.setCurlTerminalQuery(environment.getCurlTerminalQuery().replace(devTarget,stageTarget));
             environment.setCurlLogin(environment.getCurlLogin().replace(devTarget,stageTarget));
             environment.setCurlLogout(environment.getCurlLogout().replace("hkpos.dev.maoyan.team","hk-pos.pub.sta.maoyan.team"));
             environment.setCurlDetail(environment.getCurlDetail().replace(devTarget,stageTarget));
