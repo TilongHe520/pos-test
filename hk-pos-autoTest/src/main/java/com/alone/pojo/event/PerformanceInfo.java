@@ -14,4 +14,5 @@ public class PerformanceInfo {
     public String performanceNameSc;
     public String PerformanceNameTc;
     public long saleEndDate;
+    public int pubStock;
 }

@@ -14,4 +14,5 @@ public class PriceZoneInfo {
     public String code;
     public int realNameSwitch;
     public List<TicketTypeInfo> ticketTypeList;
+    public List<StockInfo> stockInfoList;
 }

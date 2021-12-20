@@ -1,5 +1,7 @@
 package com.alone.main;
 
+import com.alone.core.BulkTicket;
+import com.alone.core.ReservationConsignment;
 import com.alone.core.TelephoneTicket;
 import com.alone.core.User;
 import com.alone.enums.PosTypeEnum;
@@ -37,9 +39,18 @@ public class DemoTest {
         //获取登录cookies
         String cookies = user.login();
         try{
-            TelephoneTicket telephoneTicket = new TelephoneTicket(terminalInfo,
-                    environmentInfo,loginInfo,cookies, PosTypeEnum.valueOf("TELEPHONE_TICKET").getStatus(),837);
-            telephoneTicket.creatOrder();
+            /*
+            ReservationConsignment rc = new ReservationConsignment(terminalInfo,environmentInfo,
+                    loginInfo,cookies,PosTypeEnum.valueOf("RESERVATION_CONSIGNMENT").getStatus(),837);
+
+            rc.creatOrder();
+
+             */
+
+            BulkTicket bulkTicket = new BulkTicket(terminalInfo,environmentInfo,
+                    loginInfo,cookies,PosTypeEnum.valueOf("BUK").getStatus(),837);
+            bulkTicket.creatOrder();
+
         }catch (Exception e){
             e.printStackTrace();
         }
