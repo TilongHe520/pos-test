@@ -142,4 +142,9 @@ public class EnvironmentInfo {
      * 查询支付方式接口
      */
     public String curlPayChannel;
+
+    /**
+     * 领取已购
+     */
+    public String curlCollectionTicket;
 }

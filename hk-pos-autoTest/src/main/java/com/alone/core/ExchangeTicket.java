@@ -108,6 +108,7 @@ public class ExchangeTicket extends BaseCommon {
         dataMap.put("performanceId",cartSkuInfo.getPerformanceId());
         dataMap.put("ticketId",cartSkuInfo.getTicketId());
         dataMap.put("menuType",posType);
+        dataMap.put("eventId",eventId);
 
         String data = JSONObject.toJSONString(dataMap);
         String detailRes = given().headers(map).body(data).post(cp.getUrl()).asString();

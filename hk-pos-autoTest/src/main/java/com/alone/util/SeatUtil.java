@@ -120,7 +120,7 @@ public class SeatUtil {
         JsonUtil jsonUtil = new JsonUtil();
         SeatUtil seatUtil = new SeatUtil();
         ArrayList<NoSeatInfo> arr = seatUtil.getNoSeatInfo(response);
-        System.out.println(arr);
+
 
         String requestData = seatUtil.getAddToCartSeatParams(jsonStr,arr);
 
@@ -137,7 +137,6 @@ public class SeatUtil {
         SeatUtil seatUtil = new SeatUtil();
         String jsonStr="{\"posType\": 1,\"eventIdList\": [1352],\"performanceIdList\": [4781],\"cartSkuInfoList\": [],\"promotionCodeList\": [],\"memberList\": [],\"terminalId\": \"terminal-test\"}";
         ArrayList<SeatInfo> seatInfos = seatUtil.getSeatInfo(response);
-        System.out.println(seatInfos.toString());
 
         String requestData = seatUtil.getAddToCartSeatParams(seatInfos,jsonStr);
         requestData = jsonUtil.updateJsonStr(requestData, posType,"posType");
@@ -229,7 +228,7 @@ public class SeatUtil {
         JsonUtil jsonUtil = new JsonUtil();
         SeatUtil seatUtil = new SeatUtil();
         ArrayList<NoSeatInfo> arr = seatUtil.getNoSeatInfo(response);
-        System.out.println(arr);
+
 
         String requestData = seatUtil.getAddToCartSeatParams(jsonStr,arr,older);
 
@@ -254,7 +253,6 @@ public class SeatUtil {
         SeatUtil seatUtil = new SeatUtil();
         String jsonStr="{\"posType\": 1,\"eventIdList\": [1352],\"performanceIdList\": [4781],\"cartSkuInfoList\": [],\"promotionCodeList\": [],\"memberList\": [],\"terminalId\": \"terminal-test\"}";
         ArrayList<SeatInfo> seatInfos = seatUtil.getSeatInfo(response);
-        System.out.println(seatInfos.toString());
 
         String requestData = seatUtil.getAddToCartSeatParams(seatInfos,jsonStr,older);
         requestData = jsonUtil.updateJsonStr(requestData, posType,"posType");

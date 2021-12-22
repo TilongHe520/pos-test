@@ -140,7 +140,6 @@ public class MajorCore {
         jsonStr = jsonUtil.updateJsonStr(jsonStr,confirmRequestParams.getMenuType(),"menuType");
 
         String response = given().headers(map).body(jsonStr).post(cp.getUrl()).asString();
-        System.out.println(response);
         return response;
     }
 

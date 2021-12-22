@@ -63,7 +63,6 @@ public class AutoRun {
         String cookies = mc.login();
         try{
             List<PerformanceInfo> performanceList = mc.detail(eventId, cookies);
-            System.out.println(performanceList);
 
             List<List<ConfirmRequestParams>> confirmStockInfoList = new ArrayList<>();
             for (PerformanceInfo p : performanceList) {
@@ -74,21 +73,18 @@ public class AutoRun {
                 }
 
             }
-            System.out.println(confirmStockInfoList);
 
             for (List<ConfirmRequestParams> confirmRequestParams : confirmStockInfoList) {
                 for (ConfirmRequestParams con : confirmRequestParams) {
                     String confirmRes = mc.confirmStock(con, cookies);
                     if (jsonUtil.getValueByKeyReturnString(confirmRes, "seatDTOList") != null) {
                         String requestData = seatUtil.addRequestParams(confirmRes, loginInfo.getTerminalCode(), posType,con.getEventId());
-                        String res2 = mc.addToCart(requestData, cookies);
-                        System.out.println(res2);
+                        mc.addToCart(requestData, cookies);
                     }
                     if (jsonUtil.getValueByKeyReturnString(confirmRes, "noSeatDTOList") != null) {
 
                         String requestData = seatUtil.addRequestParams(confirmRes, posType, loginInfo.getTerminalCode(),con.getEventId());
-                        String res2 = mc.addToCart(requestData, cookies);
-                        System.out.println(res2);
+                        mc.addToCart(requestData, cookies);
                     }
 
                 }

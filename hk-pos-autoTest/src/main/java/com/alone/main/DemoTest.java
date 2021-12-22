@@ -1,15 +1,14 @@
 package com.alone.main;
 
-import com.alone.core.BulkTicket;
-import com.alone.core.ReservationConsignment;
-import com.alone.core.TelephoneTicket;
-import com.alone.core.User;
+import com.alone.core.*;
 import com.alone.enums.PosTypeEnum;
 import com.alone.environment.GetEnvironment;
 import com.alone.pojo.base.EnvironmentInfo;
 import com.alone.pojo.base.LoginInfo;
+import com.alone.pojo.collection.CollectionTicketInfo;
 import com.alone.pojo.event.PerformanceInfo;
 import com.alone.pojo.terminal.TerminalInfo;
+import com.alone.util.EncryptSha256Util;
 import com.alone.util.LoginUtil;
 
 import java.io.IOException;
@@ -22,7 +21,8 @@ import java.util.Map;
  */
 public class DemoTest {
     public static void main(String[] args) throws IOException {
-        String environment = "DEV";
+        String environment = "TEST";
+        int eventId = 843;
 
         String path="/Users/maoyan/work/pos-test/hk-pos-autoTest/src/main/resources/loginInfo.properties";
         LoginUtil loginUtil = new LoginUtil();
@@ -39,17 +39,20 @@ public class DemoTest {
         //获取登录cookies
         String cookies = user.login();
         try{
-            /*
             ReservationConsignment rc = new ReservationConsignment(terminalInfo,environmentInfo,
-                    loginInfo,cookies,PosTypeEnum.valueOf("RESERVATION_CONSIGNMENT").getStatus(),837);
+                    loginInfo,cookies,PosTypeEnum.valueOf("RESERVATION_CONSIGNMENT").getStatus(),eventId);
 
             rc.creatOrder();
 
-             */
-
             BulkTicket bulkTicket = new BulkTicket(terminalInfo,environmentInfo,
-                    loginInfo,cookies,PosTypeEnum.valueOf("BUK").getStatus(),837);
+                    loginInfo,cookies,PosTypeEnum.valueOf("BUK").getStatus(),eventId);
             bulkTicket.creatOrder();
+
+
+            CollectionTicket ct = new CollectionTicket(loginInfo,terminalInfo,environmentInfo,cookies);
+            CollectionTicketInfo c = new CollectionTicketInfo("","12345678908","0","","",
+                    new EncryptSha256Util().getSha256Str("6250947000000014"),"");
+            ct.getListCollectionTicket(c);
 
         }catch (Exception e){
             e.printStackTrace();

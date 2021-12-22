@@ -174,4 +174,11 @@ public class DemoMain {
         String data1 = JSONObject.toJSONString(map);
         System.out.println(data1);
     }
+
+    @Test
+    public void test05(){
+        long t = System.currentTimeMillis();
+        long day = 24*60*60*1000;
+        System.out.println(t+day);
+    }
 }
