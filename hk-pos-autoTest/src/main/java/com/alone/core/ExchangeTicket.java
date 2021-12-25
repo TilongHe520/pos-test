@@ -3,6 +3,7 @@ package com.alone.core;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.alone.common.BaseBuyTicket;
 import com.alone.common.BaseCommon;
 import com.alone.pojo.base.CurlParams;
 import com.alone.pojo.base.EnvironmentInfo;
@@ -12,10 +13,9 @@ import com.alone.pojo.confirm.ConfirmRequestParams;
 import com.alone.pojo.confirm.ConfirmStockInfo;
 import com.alone.pojo.confirm.ExchangeTicketInfo;
 import com.alone.pojo.event.PriceZoneInfo;
-import com.alone.util.JsonUtil;
-import com.alone.util.PriceZoneUtil;
-import com.alone.util.ResolveCurl;
-import com.alone.util.SeatUtil;
+import com.alone.pojo.print.UploadPrintInfo;
+import com.alone.pojo.terminal.TerminalInfo;
+import com.alone.util.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,10 +27,40 @@ import static io.restassured.RestAssured.given;
  * @Author: hetilong
  * @Date: 2021/12/16 21:45
  */
-public class ExchangeTicket extends BaseCommon {
+public class ExchangeTicket extends BaseBuyTicket {
 
-    public ExchangeTicket(EnvironmentInfo environmentInfo, LoginInfo loginInfo, String cookies, int posType) {
-        super(environmentInfo, loginInfo, cookies, posType);
+
+    public ExchangeTicket(TerminalInfo terminalInfo, EnvironmentInfo environmentInfo, LoginInfo loginInfo, String cookies, int posType, int eventId) {
+        super(terminalInfo, environmentInfo, loginInfo, cookies, posType,eventId);
+    }
+
+    public String exchangeOrder(String tranNumber){
+        JsonUtil jsonUtil = new JsonUtil();
+        List<String> ticketIdExc = getTicketInfo(tranNumber);
+        CartSkuInfo cartSkuInfo = checkExchange(ticketIdExc);
+        List<ConfirmRequestParams> confirmRequestParamsList = exchangeDetail(cartSkuInfo,
+                String.valueOf(eventId));
+        String requestData = confirmStock(cartSkuInfo,confirmRequestParamsList.get(0));
+        addToCart(requestData);
+
+        String queryCartRes = queryCart();
+        System.out.println(queryCartRes);
+
+        String jsonStr = getTransactionReq(queryCartRes);
+
+        String transactionId = creatTransaction(jsonStr);
+        prepayResult(transactionId);
+        String transactionNum = prepay(transactionId);
+
+        String printRes = print(transactionNum);
+
+        List<String> ticketIdList = jsonUtil.getValueByKeyFromJson(printRes,"ticketId");
+        String taskId = jsonUtil.getValueByKeyReturnString(printRes,"taskId");
+
+        List<UploadPrintInfo> uploadPrintInfoList = new UploadPrintUtil().getUploadPrintList(taskId,ticketIdList);
+
+        uploadPrintResult(uploadPrintInfoList);
+        return transactionNum;
     }
 
     /**

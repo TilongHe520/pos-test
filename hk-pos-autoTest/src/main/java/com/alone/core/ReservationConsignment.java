@@ -14,6 +14,7 @@ import com.alone.util.EncryptSha256Util;
 import com.alone.util.JsonUtil;
 import com.alone.util.RealNameUtil;
 import com.alone.util.SeatUtil;
+import org.apache.commons.lang3.RandomStringUtils;
 
 import java.util.*;
 
@@ -47,7 +48,7 @@ public class ReservationConsignment extends BaseBuyTicket {
         String transactionReq = JSON.toJSONString(creatTranParams);
         return transactionReq;
     }
-    public void creatOrder(){
+    public String creatOrder(){
         JsonUtil jsonUtil = new JsonUtil();
         SeatUtil seatUtil = new SeatUtil();
         List<PerformanceInfo> performanceInfoList = detail();
@@ -69,6 +70,7 @@ public class ReservationConsignment extends BaseBuyTicket {
         map.put("other",other);
         map.put("normal",normal);
         Set<String> keys = map.keySet();
+        String claimId = RandomStringUtils.randomAlphabetic(4).toUpperCase();
         for(String k:keys){
             if (k.equals("other")){
                 for (ConfirmRequestParams con : map.get(k)){
@@ -84,9 +86,8 @@ public class ReservationConsignment extends BaseBuyTicket {
                     }
                 }
                 String queryCartRes = queryCart();
-                String transactionReq = getTransactionReq(queryCartRes,1,"","qwewqrwc");
-                String transactionId = creatTransaction(transactionReq);
-                System.out.println(transactionId);
+                String transactionReq = getTransactionReq(queryCartRes,1,"",claimId);
+                creatTransaction(transactionReq);
 
             }else if(k.equals("normal")){
                 for (ConfirmRequestParams con : map.get(k)){
@@ -102,12 +103,13 @@ public class ReservationConsignment extends BaseBuyTicket {
                     }
                 }
                 String queryCartRes = queryCart();
-                String transactionReq = getTransactionReq(queryCartRes,2,"1640008653000","1232435");
-                String transactionId = creatTransaction(transactionReq);
-                System.out.println(transactionId);
+                String transactionReq = getTransactionReq(queryCartRes,2,String.valueOf(System.currentTimeMillis()+86400000),claimId);
+                creatTransaction(transactionReq);
             }
 
         }
+
+        return claimId;
 
     }
 }

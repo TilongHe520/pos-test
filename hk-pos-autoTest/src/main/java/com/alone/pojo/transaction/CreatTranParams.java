@@ -97,6 +97,7 @@ public class CreatTranParams {
         this.totalTicketPrice = totalTicketPrice;
     }
 
+
     public int giftTicketCount;
     public int releaseBlockType;
     public int deliveryFee;

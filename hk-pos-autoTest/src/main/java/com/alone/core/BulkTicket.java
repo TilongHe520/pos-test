@@ -106,7 +106,7 @@ public class BulkTicket extends BaseBuyTicket {
                 0,
                 t,
                 new CustomerInfo("12345678908"),
-                "SQR_EMAIL"
+                "WALK_IN"
         );
 
         String transactionReq = JSON.toJSONString(creatTranParams);

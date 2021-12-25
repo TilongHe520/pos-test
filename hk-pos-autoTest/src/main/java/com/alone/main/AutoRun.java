@@ -121,13 +121,14 @@ public class AutoRun {
             Thread.sleep(10 * 1000);
             String queryTranRes = mc.queryTran(transactionNum,cookies);
             System.out.println(queryTranRes);
-            //升级门票
+            /*/升级门票
             System.out.println("=======升级门票========");
             UpgradeTicket upgradeTicket = new UpgradeTicket(cookies,environmentInfo,loginInfo,12);
             List<String> ticketId = upgradeTicket.getTicketInfo(transactionNum);
             String checkExchangeRes = upgradeTicket.checkExchange(ticketId);
             System.out.println("==========="+checkExchangeRes);
             upgradeTicket.creatOrder(mc);
+
 
             //换票
             System.out.println("=======换票========");
@@ -157,6 +158,8 @@ public class AutoRun {
             String reprintUploadRes = reprintTicket.uploadPrintResult(uploadPrintInfoList1);
             System.out.println("%%%%%%%"+reprintUploadRes);
 
+     */
+
 
             //离线退款
             System.out.println("=====离线退款====");
@@ -173,12 +176,14 @@ public class AutoRun {
             System.out.println(refundSettleInfoList);
             String refundSettleRes = mc.refundSettle(refundSettleInfoList,cookies);
             System.out.println(refundSettleRes);
+
             Thread.sleep(10 * 1000);
             String queryTranRes1 = mc.queryTran(refundSettleRes,cookies);
             System.out.println(queryTranRes1);
             Thread.sleep(10 * 1000);
             String summaryRes = mc.summary(cookies);
             System.out.println(summaryRes);
+
 
             System.out.println("====收取手续费====");
             List<PoundageTypeInfo> poundageTypeInfoList = mc.listPoundage(cookies);

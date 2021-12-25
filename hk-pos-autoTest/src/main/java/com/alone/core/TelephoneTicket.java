@@ -3,6 +3,7 @@ package com.alone.core;
 import com.alibaba.fastjson.JSONArray;
 import com.alone.common.BaseBuyTicket;
 import com.alone.common.BaseCommon;
+import com.alone.pojo.base.CurlParams;
 import com.alone.pojo.base.EnvironmentInfo;
 import com.alone.pojo.base.LoginInfo;
 import com.alone.pojo.confirm.ConfirmRequestParams;
@@ -10,10 +11,14 @@ import com.alone.pojo.event.PerformanceInfo;
 import com.alone.pojo.terminal.TerminalInfo;
 import com.alone.util.JsonUtil;
 import com.alone.util.RealNameUtil;
+import com.alone.util.ResolveCurl;
 import com.alone.util.SeatUtil;
 
 
 import java.util.List;
+import java.util.Map;
+
+import static io.restassured.RestAssured.given;
 
 /**
  * 电话购票场景(待完善)
@@ -34,7 +39,6 @@ public class TelephoneTicket extends BaseBuyTicket {
         for(PerformanceInfo p:performanceInfoList){
             String detailRes = detail(p.getPerformanceId());
             List<ConfirmRequestParams> confirmRequestParams = getConfirmRequestParams(detailRes,p.getPerformanceId());
-            System.out.println(confirmRequestParams);
             for (ConfirmRequestParams con :confirmRequestParams){
                 String confirmRes = confirmStock(con);
                 if (jsonUtil.getValueByKeyReturnString(confirmRes, "seatDTOList") != null) {
@@ -59,7 +63,28 @@ public class TelephoneTicket extends BaseBuyTicket {
             e.printStackTrace();
         }
         String res = prepayResult(transactionId);
-        return res;
+        return tranNumber;
+    }
+
+    /**
+     * 预支付接口
+     */
+    @Override
+    public  String prepay(String transactionId){
+        String jsonStr = "{\"transactionId\":11018,\"payChannel\":3,\"sellChannel\":2,\"cardNumber\":\"6250947000000014\",\"desensitizationCardNumber\":\"625094******0014\",\"hashCardNumber\":\"561c0fcfa9e8fbd9cdef2099fdd91c02f62ba0f9becfe928eb2bc61baa5f5bb6\",\"unionPayRequest\":{\"expired\":\"3312\"}}";
+        ResolveCurl rs = new ResolveCurl(environmentInfo.getCurlPrePay());
+        CurlParams cp = rs.getParams();
+        Map<String,String> map = cp.getHeader();
+        map.put("Cookie",cookies);
+        map.put("x-terminal-code",terminalInfo.getTerminalId());
+        map.put("x-terminal-id",String.valueOf(terminalInfo.getId()));
+
+        JsonUtil jsonUtil = new JsonUtil();
+        String data = jsonUtil.updateJsonStr(jsonStr,transactionId,"transactionId");
+        String response = given().headers(map).body(data).post(cp.getUrl()).asString();
+        System.out.println(response);
+        String tranNumber = jsonUtil.getValueByKeyFromJson(response,"tranNumber").get(0);
+        return tranNumber;
     }
 
 }

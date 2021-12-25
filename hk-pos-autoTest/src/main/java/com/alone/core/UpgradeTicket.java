@@ -3,6 +3,7 @@ package com.alone.core;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.alone.common.BaseBuyTicket;
 import com.alone.common.BaseCommon;
 import com.alone.pojo.base.CurlParams;
 import com.alone.pojo.base.EnvironmentInfo;
@@ -10,6 +11,7 @@ import com.alone.pojo.base.LoginInfo;
 import com.alone.pojo.cart.CartTicketInfo;
 import com.alone.pojo.cart.TicketRealNameInfo;
 import com.alone.pojo.print.UploadPrintInfo;
+import com.alone.pojo.terminal.TerminalInfo;
 import com.alone.pojo.transaction.CreatTranParams;
 import com.alone.pojo.transaction.CustomerInfo;
 import com.alone.util.JsonUtil;
@@ -27,9 +29,11 @@ import static io.restassured.RestAssured.given;
  * @Author: hetilong
  * @Date: 2021/12/12 10:49
  */
-public class UpgradeTicket extends BaseCommon{
-    public UpgradeTicket(String cookies,EnvironmentInfo environmentInfo,LoginInfo loginInfo,int posType){
-        super(environmentInfo,loginInfo,cookies,posType);
+public class UpgradeTicket extends BaseBuyTicket {
+
+
+    public UpgradeTicket(TerminalInfo terminalInfo, EnvironmentInfo environmentInfo, LoginInfo loginInfo, String cookies, int posType) {
+        super(terminalInfo, environmentInfo, loginInfo, cookies, posType);
     }
 
     /**
@@ -42,8 +46,8 @@ public class UpgradeTicket extends BaseCommon{
         CurlParams cp = rs.getParams();
 
         Map<String,String> map = cp.getHeader();
-        map.put("x-terminal-code",loginInfo.getTerminalCode());
-        map.put("x-terminal-id",loginInfo.getTerminalId());
+        map.put("x-terminal-code",terminalInfo.getTerminalId());
+        map.put("x-terminal-id",String.valueOf(terminalInfo.getId()));
         map.put("Cookie",cookies);
 
         JsonUtil jsonUtil = new JsonUtil();
@@ -73,8 +77,8 @@ public class UpgradeTicket extends BaseCommon{
         CurlParams cp = rs.getParams();
 
         Map<String,String> map = cp.getHeader();
-        map.put("x-terminal-code",loginInfo.getTerminalCode());
-        map.put("x-terminal-id",loginInfo.getTerminalId());
+        map.put("x-terminal-code",terminalInfo.getTerminalId());
+        map.put("x-terminal-id",String.valueOf(terminalInfo.getId()));
         map.put("Cookie",cookies);
 
         JsonUtil jsonUtil = new JsonUtil();
@@ -85,5 +89,61 @@ public class UpgradeTicket extends BaseCommon{
         return res;
     }
 
+    @Override
+    public String getTransactionReq(String queryCartRes){
+        RealNameUtil realNameUtil = new RealNameUtil();
+        JsonUtil jsonUtil = new JsonUtil();
+        List<TicketRealNameInfo> t = realNameUtil.getTicketRealList(queryCartRes);
+
+        CreatTranParams creatTranParams = new CreatTranParams(
+                0,
+                0,
+                0,
+                posType,
+                Integer.valueOf(jsonUtil.getValueByKeyReturnString(queryCartRes,"totalPrice")),
+                0,
+                Integer.valueOf(jsonUtil.getValueByKeyReturnString(queryCartRes,"serviceFee")),
+                Integer.valueOf(jsonUtil.getValueByKeyReturnString(queryCartRes,"ticketCount")),
+                Integer.valueOf(jsonUtil.getValueByKeyReturnString(queryCartRes,"ticketCount")),
+                terminalInfo.getOutletGroupCode(),
+                terminalInfo.getOutletCode(),
+                terminalInfo.getTerminalId(),
+                "CASH",
+                true,
+                2,
+                t,
+                new CustomerInfo("12345678908")
+        );
+
+        String transactionReq = JSON.toJSONString(creatTranParams);
+        return transactionReq;
+    }
+
+    public String creatOrder(String tranNumber){
+        List<String> ids = getTicketInfo(tranNumber);
+        String checkRes = checkExchange(ids);
+        System.out.println(checkRes);
+
+        JsonUtil jsonUtil = new JsonUtil();
+
+        String queryCartRes = queryCart();
+        System.out.println(queryCartRes);
+
+        String jsonStr = getTransactionReq(queryCartRes);
+
+        String transactionId = creatTransaction(jsonStr);
+        prepayResult(transactionId);
+        String transactionNum = prepay(transactionId);
+
+        String printRes = print(transactionNum);
+
+        List<String> ticketIdList = jsonUtil.getValueByKeyFromJson(printRes,"ticketId");
+        String taskId = jsonUtil.getValueByKeyReturnString(printRes,"taskId");
+
+        List<UploadPrintInfo> uploadPrintInfoList = new UploadPrintUtil().getUploadPrintList(taskId,ticketIdList);
+
+        uploadPrintResult(uploadPrintInfoList);
+        return transactionNum;
+    }
 
 }

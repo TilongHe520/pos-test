@@ -46,6 +46,15 @@ public class BaseBuyTicket {
         this.eventId = eventId;
     }
 
+    public BaseBuyTicket(TerminalInfo terminalInfo,EnvironmentInfo environmentInfo,LoginInfo loginInfo,String cookies,
+                         int posType){
+        this.environmentInfo = environmentInfo;
+        this.terminalInfo = terminalInfo;
+        this.loginInfo = loginInfo;
+        this.cookies = cookies;
+        this.posType = posType;
+    }
+
     /**
      * 详情页接口回去可售场次ID
      * @return
@@ -127,7 +136,6 @@ public class BaseBuyTicket {
         jsonStr = jsonUtil.updateJsonStr(jsonStr,confirmRequestParams.getMenuType(),"menuType");
 
         String response = given().headers(map).body(jsonStr).post(cp.getUrl()).asString();
-        System.out.println(response);
         return response;
     }
 
@@ -246,7 +254,6 @@ public class BaseBuyTicket {
      * 预支付接口
      */
     public  String prepay(String transactionId){
-        String jsonStr = "{\"transactionId\":11018,\"payChannel\":3,\"sellChannel\":2,\"cardNumber\":\"6250947000000014\",\"desensitizationCardNumber\":\"625094******0014\",\"hashCardNumber\":\"561c0fcfa9e8fbd9cdef2099fdd91c02f62ba0f9becfe928eb2bc61baa5f5bb6\",\"unionPayRequest\":{\"expired\":\"3312\"}}";
         ResolveCurl rs = new ResolveCurl(environmentInfo.getCurlPrePay());
         CurlParams cp = rs.getParams();
         Map<String,String> map = cp.getHeader();
@@ -255,7 +262,7 @@ public class BaseBuyTicket {
         map.put("x-terminal-id",String.valueOf(terminalInfo.getId()));
 
         JsonUtil jsonUtil = new JsonUtil();
-        String data = jsonUtil.updateJsonStr(jsonStr,transactionId,"transactionId");
+        String data = jsonUtil.updateJsonStr(cp.getData(),transactionId,"transactionId");
         String response = given().headers(map).body(data).post(cp.getUrl()).asString();
         System.out.println(response);
         String tranNumber = jsonUtil.getValueByKeyFromJson(response,"tranNumber").get(0);
