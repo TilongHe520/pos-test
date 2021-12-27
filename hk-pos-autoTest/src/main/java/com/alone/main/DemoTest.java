@@ -58,7 +58,14 @@ public class DemoTest {
             System.out.println("======预留内销门票========");
             ReservationConsignment rc = new ReservationConsignment(terminalInfo,environmentInfo,
                     loginInfo,cookies,PosTypeEnum.valueOf("RESERVATION_CONSIGNMENT").getStatus(),eventId);
-            System.out.println(rc.creatOrder());
+            String claimId = rc.creatOrder();
+
+            System.out.println("=======取消预留========");
+            ReserveClaimAndRelease release = new ReserveClaimAndRelease(terminalInfo,environmentInfo,
+                    loginInfo,cookies,PosTypeEnum.valueOf("RLS").getStatus());
+            String resReserve = release.queryResTransaction(claimId,5);
+            release.releaseReserve(resReserve);
+
             System.out.println("=======大量购票========");
             BulkTicket bulkTicket = new BulkTicket(terminalInfo,environmentInfo,
                     loginInfo,cookies,PosTypeEnum.valueOf("BUK").getStatus(),eventId);

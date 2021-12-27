@@ -7,6 +7,7 @@ import com.alone.pojo.base.CurlParams;
 import com.alone.pojo.base.EnvironmentInfo;
 import com.alone.pojo.base.LoginInfo;
 import com.alone.pojo.cart.CartSkuInfo;
+import com.alone.pojo.reservation.ResTransactionInfoReq;
 import com.alone.pojo.ticket.TicketInfo;
 import com.alone.util.FileUtil;
 import com.alone.util.JsonUtil;
@@ -180,5 +181,17 @@ public class DemoMain {
         long t = System.currentTimeMillis();
         long day = 24*60*60*1000;
         System.out.println(t+day);
+    }
+
+    @Test
+    public void test06(){
+        String s = "{\"ticketId\":127019,\"checkCode\":\"alone01\",\"eventId\":1055,\"performanceId\":5764,\"performanceStartTime\":null,\"eventCode\":\"alone-new\",\"beginTime\":1641564000000,\"beginTimeSc\":\"2022/01/07 星期五 下午 10:00\",\"beginTimeTc\":\"2022/01/07 星期五 下午 10:00\",\"beginTimeEn\":\"2022/01/07 Fri PM 10:00\",\"transactionType\":null,\"transactionTypeValue\":null,\"section\":\"Section_A\",\"seatId\":1347481,\"pohId\":4942,\"uniqueId\":\"5764.0.109.2.11.2\",\"pohName\":null,\"pohNameEn\":null,\"pohNameTc\":null,\"pohNameSc\":null,\"row\":\"H\",\"col\":\"1\",\"price\":1000,\"blockTypeId\":109,\"blockTypeCode\":\"WE\",\"lockStatus\":0,\"priceZoneId\":93,\"priceZoneNameEn\":\"pos_price_A\",\"priceZoneNameTc\":\"pos_price_A\",\"priceZoneNameSc\":\"pos_price_A\",\"priceZoneCode\":\"pos_price_A\",\"color\":null,\"ticketTypeId\":25,\"ticketTypeNameEn\":\"Standard\",\"ticketTypeNameTc\":\"正價票\",\"ticketTypeNameSc\":\"正价票\",\"ticketTypeCode\":\"STAN\",\"fetchCode\":\"alone01\",\"reserveDateEn\":\"2021/12/24 Fri PM 03:24\",\"reserveDateTc\":\"2021/12/24 星期五 下午 03:24\",\"reserveDateSc\":\"2021/12/24 星期五 下午 03:24\",\"lastName\":\"\",\"firstName\":\"\",\"performanceNameEn\":\"exchange wheelchair Facility-1\",\"performanceNameTc\":\"換領輪椅設施-1\",\"performanceNameSc\":\"换领轮椅设施-1\",\"ticketShowEn\":\"Standard/pos_price_A/$10.00\",\"ticketShowTc\":\"正價票/pos_price_A/$10.00\",\"ticketShowSc\":\"正价票/pos_price_A/$10.00\",\"deliveryMethodCode\":null,\"deliveryMethodNameEn\":null,\"deliveryMethodNameTc\":null,\"deliveryMethodNameSc\":null,\"blockTypeList\":[{\"id\":0,\"code\":\"public\",\"nameEn\":\"Public Seats\",\"nameTc\":\"公眾票\",\"nameSc\":\"公众票\",\"sortSeq\":\"0\",\"displayModel\":null},{\"id\":109,\"code\":\"WE\",\"nameEn\":\"Wheelchair Exchange\",\"nameTc\":\"輪椅鎖座\",\"nameSc\":\"轮椅锁座\",\"sortSeq\":\"00001\",\"displayModel\":3},{\"id\":196,\"code\":\"H1\",\"nameEn\":\"ALONE1\",\"nameTc\":\"ALONE1\",\"nameSc\":\"ALONE1\",\"sortSeq\":\"00002\",\"displayModel\":2},{\"id\":197,\"code\":\"H2\",\"nameEn\":\"ALONE2\",\"nameTc\":\"ALONE2\",\"nameSc\":\"ALONE2\",\"sortSeq\":\"00002\",\"displayModel\":1},{\"id\":198,\"code\":\"H3\",\"nameEn\":\"alone3\",\"nameTc\":\"alone3\",\"nameSc\":\"alone3\",\"sortSeq\":\"00003\",\"displayModel\":1}],\"baseTicketType\":0,\"seatType\":4,\"seatTypeId\":103,\"seatTypeNameEn\":\"Minder_pos\",\"seatTypeNameTc\":\"看護人_pos\",\"seatTypeNameSc\":\"看护人_pos\",\"showSpecialInfo\":1,\"specialNameEn\":\"pos_Minder\",\"specialNameTc\":\"pos_看護人\",\"specialNameSc\":\"pos_看护人\",\"openSeatTypeDTO\":null,\"holderFistName\":null,\"holderLastName\":null}";
+
+        ResTransactionInfoReq res =  JSONObject.parseObject(s,ResTransactionInfoReq.class);
+        res.setPerformanceDateTime(new JsonUtil().getValueByKeyReturnString(s,"beginTime"));
+        res.setTicketPassword(new JsonUtil().getValueByKeyReturnString(s,"fetchCode"));
+        res.setTicketPrice(Integer.valueOf(new JsonUtil().getValueByKeyReturnString(s,"price")));
+        res.setReserveDateTime("1640330674000");
+        System.out.println(res);
     }
 }

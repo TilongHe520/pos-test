@@ -147,4 +147,14 @@ public class EnvironmentInfo {
      * 领取已购
      */
     public String curlCollectionTicket;
+
+    /**
+     * 预留相关
+     */
+    public String curlReservation;
+
+    /**
+     * 取消预留
+     */
+    public String curlReleaseReserve;
 }
