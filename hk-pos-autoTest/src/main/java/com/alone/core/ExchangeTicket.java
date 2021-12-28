@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alone.common.BaseBuyTicket;
-import com.alone.common.BaseCommon;
 import com.alone.pojo.base.CurlParams;
 import com.alone.pojo.base.EnvironmentInfo;
 import com.alone.pojo.base.LoginInfo;
@@ -205,6 +204,7 @@ public class ExchangeTicket extends BaseBuyTicket {
      * @param requestData
      * @return
      */
+    @Override
     public  String addToCart(String requestData){
 
         ResolveCurl rs = new ResolveCurl(environmentInfo.getCurlAddToCart());

@@ -157,4 +157,9 @@ public class EnvironmentInfo {
      * 取消预留
      */
     public String curlReleaseReserve;
+
+    /**
+     * 领取预留
+     */
+    public String curlClaimCheck;
 }

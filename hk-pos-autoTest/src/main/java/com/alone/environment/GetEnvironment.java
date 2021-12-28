@@ -48,6 +48,7 @@ public class GetEnvironment {
             environment.setCurlCollectionTicket(environment.getCurlCollectionTicket().replace(devTarget,testTarget));
             environment.setCurlReservation(environment.getCurlReservation().replace(devTarget, testTarget));
             environment.setCurlReleaseReserve(environment.getCurlReleaseReserve().replace(devTarget, testTarget));
+            environment.setCurlClaimCheck(environment.getCurlClaimCheck().replace(devTarget, testTarget));
         }else if("STAGE".equals(env)){
             environment.setCurlTerminalQuery(environment.getCurlTerminalQuery().replace(devTarget,stageTarget));
             environment.setCurlLogin(environment.getCurlLogin().replace(devTarget,stageTarget));
@@ -76,6 +77,7 @@ public class GetEnvironment {
             environment.setCurlCollectionTicket(environment.getCurlCollectionTicket().replace(devTarget,stageTarget));
             environment.setCurlReservation(environment.getCurlReservation().replace(devTarget, stageTarget));
             environment.setCurlReleaseReserve(environment.getCurlReleaseReserve().replace(devTarget, stageTarget));
+            environment.setCurlClaimCheck(environment.getCurlClaimCheck().replace(devTarget, stageTarget));
         }
         return environment;
     }

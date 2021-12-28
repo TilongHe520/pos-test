@@ -6,13 +6,9 @@ import com.alone.environment.GetEnvironment;
 import com.alone.pojo.base.EnvironmentInfo;
 import com.alone.pojo.base.LoginInfo;
 import com.alone.pojo.collection.CollectionTicketInfo;
-import com.alone.pojo.event.PerformanceInfo;
 import com.alone.pojo.terminal.TerminalInfo;
-import com.alone.pojo.ticket.RefundAddInfo;
-import com.alone.pojo.ticket.RefundSettleInfo;
 import com.alone.util.EncryptSha256Util;
 import com.alone.util.LoginUtil;
-import com.alone.util.RefundUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -49,11 +45,12 @@ public class DemoTest {
                     loginInfo,cookies,PosTypeEnum.valueOf("REG").getStatus(),eventId);
             String tranNumber = normalTicket.createOrder();
             tranNumbers.add(tranNumber);
-
+            /*
             System.out.println("========电话购票=========");
             TelephoneTicket telephoneTicket = new TelephoneTicket(terminalInfo,environmentInfo,
                     loginInfo,cookies,PosTypeEnum.valueOf("TELEPHONE_TICKET").getStatus(),eventId);
             telephoneTicket.creatOrder();
+             */
 
             System.out.println("======预留内销门票========");
             ReservationConsignment rc = new ReservationConsignment(terminalInfo,environmentInfo,
@@ -65,6 +62,12 @@ public class DemoTest {
                     loginInfo,cookies,PosTypeEnum.valueOf("RLS").getStatus());
             String resReserve = release.queryResTransaction(claimId,5);
             release.releaseReserve(resReserve);
+
+            System.out.println("=======领取预留========");
+            ReserveClaimAndRelease claim = new ReserveClaimAndRelease(terminalInfo,environmentInfo,
+                    loginInfo,cookies,PosTypeEnum.valueOf("CLM").getStatus());
+            tranNumbers.add(claim.claimOrder(claimId,4));
+
 
             System.out.println("=======大量购票========");
             BulkTicket bulkTicket = new BulkTicket(terminalInfo,environmentInfo,
