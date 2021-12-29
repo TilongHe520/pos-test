@@ -6,6 +6,7 @@ import com.alone.pojo.terminal.TerminalInfo;
 import com.alone.util.JsonUtil;
 import com.alone.util.ResolveCurl;
 
+import java.util.List;
 import java.util.Map;
 
 import static io.restassured.RestAssured.given;
@@ -25,21 +26,23 @@ public class Transaction {
     }
     /**
      * 查询交易接口
-     * @param tranNum
+     * @param tranNums
      * @return
      */
-    public  String queryTran(String tranNum){
-        ResolveCurl rs = new ResolveCurl(environmentInfo.getCurlQueryTran());
-        CurlParams cp = rs.getParams();
-        Map<String,String> map = cp.getHeader();
-        map.put("Cookie",cookies);
-        map.put("x-terminal-code",terminalInfo.getTerminalId());
-        map.put("x-terminal-id",String.valueOf(terminalInfo.getId()));
+    public  void queryTran(List<String> tranNums){
+        for(String tranNum:tranNums){
+            ResolveCurl rs = new ResolveCurl(environmentInfo.getCurlQueryTran());
+            CurlParams cp = rs.getParams();
+            Map<String,String> map = cp.getHeader();
+            map.put("Cookie",cookies);
+            map.put("x-terminal-code",terminalInfo.getTerminalId());
+            map.put("x-terminal-id",String.valueOf(terminalInfo.getId()));
 
-        JsonUtil jsonUtil = new JsonUtil();
-        String jsonStr = jsonUtil.updateJsonStr(cp.getData(),tranNum,"tranNum");
-        String res = given().headers(map).body(jsonStr).post(cp.getUrl()).asString();
-        return jsonUtil.getValueByKeyFromJson(res,"data").toString();
+            JsonUtil jsonUtil = new JsonUtil();
+            String jsonStr = jsonUtil.updateJsonStr(cp.getData(),tranNum,"tranNum");
+            String res = given().headers(map).body(jsonStr).post(cp.getUrl()).asString();
+            System.out.println(res);
+        }
     }
 
     public  String summary(){

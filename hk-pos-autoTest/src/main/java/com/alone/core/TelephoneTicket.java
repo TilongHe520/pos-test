@@ -1,8 +1,6 @@
 package com.alone.core;
 
-import com.alibaba.fastjson.JSONArray;
 import com.alone.common.BaseBuyTicket;
-import com.alone.common.BaseCommon;
 import com.alone.pojo.base.CurlParams;
 import com.alone.pojo.base.EnvironmentInfo;
 import com.alone.pojo.base.LoginInfo;
@@ -10,7 +8,6 @@ import com.alone.pojo.confirm.ConfirmRequestParams;
 import com.alone.pojo.event.PerformanceInfo;
 import com.alone.pojo.terminal.TerminalInfo;
 import com.alone.util.JsonUtil;
-import com.alone.util.RealNameUtil;
 import com.alone.util.ResolveCurl;
 import com.alone.util.SeatUtil;
 

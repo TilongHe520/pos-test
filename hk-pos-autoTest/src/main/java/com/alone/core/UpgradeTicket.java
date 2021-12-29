@@ -2,13 +2,10 @@ package com.alone.core;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.alone.common.BaseBuyTicket;
-import com.alone.common.BaseCommon;
 import com.alone.pojo.base.CurlParams;
 import com.alone.pojo.base.EnvironmentInfo;
 import com.alone.pojo.base.LoginInfo;
-import com.alone.pojo.cart.CartTicketInfo;
 import com.alone.pojo.cart.TicketRealNameInfo;
 import com.alone.pojo.print.UploadPrintInfo;
 import com.alone.pojo.terminal.TerminalInfo;

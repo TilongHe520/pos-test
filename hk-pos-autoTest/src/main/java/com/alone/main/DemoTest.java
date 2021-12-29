@@ -21,8 +21,12 @@ import java.util.Map;
  */
 public class DemoTest {
     public static void main(String[] args) throws IOException {
-        String environment = "TEST";
-        int eventId = 782;
+        String environment = "DEV";
+        //String environment = "TEST";
+        //String environment = "STAGE";
+        int eventId = 837;
+        //int eventId = 782;
+        //int eventId = 13263;
 
         String path="/Users/maoyan/work/pos-test/hk-pos-autoTest/src/main/resources/loginInfo.properties";
         LoginUtil loginUtil = new LoginUtil();
@@ -45,12 +49,11 @@ public class DemoTest {
                     loginInfo,cookies,PosTypeEnum.valueOf("REG").getStatus(),eventId);
             String tranNumber = normalTicket.createOrder();
             tranNumbers.add(tranNumber);
-            /*
+
             System.out.println("========电话购票=========");
             TelephoneTicket telephoneTicket = new TelephoneTicket(terminalInfo,environmentInfo,
                     loginInfo,cookies,PosTypeEnum.valueOf("TELEPHONE_TICKET").getStatus(),eventId);
             telephoneTicket.creatOrder();
-             */
 
             System.out.println("======预留内销门票========");
             ReservationConsignment rc = new ReservationConsignment(terminalInfo,environmentInfo,
@@ -106,7 +109,7 @@ public class DemoTest {
 
             System.out.println("======交易查询======");
             Transaction tran = new Transaction(cookies,terminalInfo,environmentInfo);
-            tran.queryTran(tranNumber);
+            tran.queryTran(tranNumbers);
             System.out.println("======报表预览======");
             tran.summary();
 
