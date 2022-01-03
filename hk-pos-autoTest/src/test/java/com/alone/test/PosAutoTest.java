@@ -3,10 +3,15 @@ package com.alone.test;
 import com.alone.core.*;
 import com.alone.enums.PosTypeEnum;
 import com.alone.pojo.collection.CollectionTicketInfo;
+import com.alone.pojo.print.UploadPrintInfo;
 import com.alone.report.Report;
 import com.alone.util.EncryptSha256Util;
+import com.alone.util.JsonUtil;
+import com.alone.util.UploadPrintUtil;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
+
+import java.util.List;
 
 /**
  * @Author: hetilong
@@ -86,18 +91,28 @@ public class PosAutoTest extends AutomationTest {
     public void telephoneTicket(){
         TelephoneTicket telephoneTicket = new TelephoneTicket(terminalInfo,environmentInfo,
                 loginInfo,cookies,PosTypeEnum.valueOf("TELEPHONE_TICKET").getStatus(),eventId);
-        telephoneTicket.creatOrder();
+        tranNumber = telephoneTicket.creatOrder();
+        tranNumbers.add(tranNumber);
     }
 
     @Test(priority = 12,dependsOnMethods = "telephoneTicket",description = "collectionTicket")
     public void collectionTicket(){
+        JsonUtil jsonUtil = new JsonUtil();
         CollectionTicket ct = new CollectionTicket(loginInfo,terminalInfo,environmentInfo,cookies);
         CollectionTicketInfo c = new CollectionTicketInfo("","","0","","",
                 new EncryptSha256Util().getSha256Str("6250947000000014"),"");
         ct.getListCollectionTicket(c);
+        String printRes = ct.print(tranNumber);
+
+        List<String> ticketIdList = jsonUtil.getValueByKeyFromJson(printRes,"ticketId");
+        String taskId = jsonUtil.getValueByKeyReturnString(printRes,"taskId");
+
+        List<UploadPrintInfo> uploadPrintInfoList = new UploadPrintUtil().getUploadPrintList(taskId,ticketIdList);
+
+        ct.uploadPrintResult(uploadPrintInfoList);
     }
 
-    @Test(priority =13,dependsOnMethods = "normalTicket",description = "refundTicket")
+    @Test(priority =13,dependsOnMethods = {"normalTicket","collectionTicket"},description = "refundTicket")
     public void refundTicket(){
         RefundTicket refundTicket = new RefundTicket(terminalInfo,environmentInfo,loginInfo,
                 cookies,PosTypeEnum.valueOf("REFUND_TICKET").getStatus());

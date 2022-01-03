@@ -1,6 +1,8 @@
 package com.alone.core;
 
 import com.alibaba.fastjson.JSONObject;
+import com.alone.common.BaseBuyTicket;
+import com.alone.enums.PosTypeEnum;
 import com.alone.pojo.base.CurlParams;
 import com.alone.pojo.base.EnvironmentInfo;
 import com.alone.pojo.base.LoginInfo;
@@ -11,24 +13,17 @@ import com.alone.util.ResolveCurl;
 import java.util.Map;
 
 import static io.restassured.RestAssured.given;
-import static io.restassured.RestAssured.post;
 
 /**
  * @Author: hetilong
  * @Date: 2021/12/20 16:59
  * 领取已购相关
  */
-public class CollectionTicket {
-    public LoginInfo loginInfo;
-    public TerminalInfo terminalInfo;
-    public EnvironmentInfo environmentInfo;
-    public String cookies;
+public class CollectionTicket extends BaseBuyTicket {
 
     public CollectionTicket(LoginInfo loginInfo, TerminalInfo terminalInfo, EnvironmentInfo environmentInfo, String cookies) {
-        this.loginInfo = loginInfo;
-        this.terminalInfo = terminalInfo;
-        this.environmentInfo = environmentInfo;
-        this.cookies = cookies;
+        super(terminalInfo,environmentInfo,loginInfo,cookies, PosTypeEnum.valueOf("CLAIM_PAID_TICKET").getStatus());
+
     }
 
     public void getListCollectionTicket(CollectionTicketInfo collectionTicketInfo){

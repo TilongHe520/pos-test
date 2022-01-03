@@ -21,11 +21,11 @@ import java.util.Map;
  */
 public class AutomationTest {
 
-    public String environment = "DEV";
-    //String environment = "TEST";
+    //public String environment = "DEV";
+    public String environment = "TEST";
     //String environment = "STAGE";
-    public int eventId = 837;
-    //int eventId = 782;
+    //public int eventId = 837;
+    public int eventId = 782;
     //int eventId = 13263;
 
     public String path="/Users/maoyan/work/pos-test/hk-pos-autoTest/src/main/resources/loginInfo.properties";
