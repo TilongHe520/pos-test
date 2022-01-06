@@ -2,8 +2,10 @@ package com.alone.environment;
 
 import com.alone.pojo.base.EnvironmentInfo;
 import com.alone.util.FileUtil;
+import org.testng.annotations.Test;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 
 
 /**
@@ -11,19 +13,52 @@ import java.io.IOException;
  * @Date: 2021/11/29 08:41
  */
 public class GetEnvironment {
+
+    private final static String devTarget = "hkpos.dev.maoyan.team";
+    private final static String testTarget = "show-pos.pub.cs.maoyan.team";
+    private final static String stageTarget = "hk-pos.pub.sta.maoyan.team";
+    private final static String path = "/Users/maoyan/work/curl.txt";
+
+    public EnvironmentInfo getEnvironmentCurl(String env) throws IOException {
+        FileUtil fileUtil = new FileUtil();
+        EnvironmentInfo environment = fileUtil.getCurlObject(path);
+        if ("DEV".equals(env)){
+            return environment;
+        }else if ("TEST".equals(env)){
+            return getEnvironmentInfo(environment,testTarget);
+        }else if("STAGE".equals(env)){
+            return getEnvironmentInfo(environment,stageTarget);
+        }
+        return environment;
+    }
+    /**
+     * 通过反射修改属性值
+     */
+    public EnvironmentInfo getEnvironmentInfo(EnvironmentInfo environmentInfo,String replaceTarget) {
+        try{
+            Class clazz = environmentInfo.getClass();
+            Field[] fs = clazz.getDeclaredFields();
+            for (Field field : fs) {
+                field.setAccessible(true);
+                field.set(environmentInfo,String.valueOf(field.get(environmentInfo)).replace(devTarget,replaceTarget));
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return environmentInfo;
+    }
+    /**
     public EnvironmentInfo getEnvironmentCurl(String env) throws IOException {
         FileUtil fileUtil = new FileUtil();
         String path = "/Users/maoyan/work/curl.txt";
         EnvironmentInfo environment = fileUtil.getCurlObject(path);
-        String devTarget = "http://hkpos.dev.maoyan.team";
-        String testTarget = "http://show-pos.pub.cs.maoyan.team";
-        String stageTarget = "http://hk-pos.pub.sta.maoyan.team";
+
         if ("DEV".equals(env)){
             return environment;
         }else if ("TEST".equals(env)){
             environment.setCurlTerminalQuery(environment.getCurlTerminalQuery().replace(devTarget,testTarget));
             environment.setCurlLogin(environment.getCurlLogin().replace(devTarget,testTarget));
-            environment.setCurlLogout(environment.getCurlLogout().replace("hkpos.dev.maoyan.team","show-pos.pub.cs.maoyan.team"));
+            environment.setCurlLogout(environment.getCurlLogout().replace(devTarget,testTarget));
             environment.setCurlDetail(environment.getCurlDetail().replace(devTarget,testTarget));
             environment.setCurlConfirmStock(environment.getCurlConfirmStock().replace(devTarget,testTarget));
             environment.setCurlAddToCart(environment.getCurlAddToCart().replace(devTarget,testTarget));
@@ -52,7 +87,7 @@ public class GetEnvironment {
         }else if("STAGE".equals(env)){
             environment.setCurlTerminalQuery(environment.getCurlTerminalQuery().replace(devTarget,stageTarget));
             environment.setCurlLogin(environment.getCurlLogin().replace(devTarget,stageTarget));
-            environment.setCurlLogout(environment.getCurlLogout().replace("hkpos.dev.maoyan.team","hk-pos.pub.sta.maoyan.team"));
+            environment.setCurlLogout(environment.getCurlLogout().replace(devTarget,testTarget));
             environment.setCurlDetail(environment.getCurlDetail().replace(devTarget,stageTarget));
             environment.setCurlConfirmStock(environment.getCurlConfirmStock().replace(devTarget,stageTarget));
             environment.setCurlAddToCart(environment.getCurlAddToCart().replace(devTarget,stageTarget));
@@ -81,4 +116,5 @@ public class GetEnvironment {
         }
         return environment;
     }
+     */
 }

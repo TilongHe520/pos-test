@@ -21,11 +21,11 @@ import java.util.Map;
  */
 public class DemoTest {
     public static void main(String[] args) throws IOException {
-        String environment = "DEV";
-        //String environment = "TEST";
+        //String environment = "DEV";
+        String environment = "TEST";
         //String environment = "STAGE";
-        int eventId = 837;
-        //int eventId = 782;
+        //int eventId = 837;
+        int eventId = 782;
         //int eventId = 13263;
 
         String path="/Users/maoyan/work/pos-test/hk-pos-autoTest/src/main/resources/loginInfo.properties";

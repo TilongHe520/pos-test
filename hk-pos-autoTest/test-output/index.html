@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+  <meta charset='utf-8'>
+  <title>TestNG reports</title>
+
+    <link type="text/css" href="testng-reports.css" rel="stylesheet" />  
+    <script type="text/javascript" src="jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="testng-reports.js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type='text/javascript'>
+      google.load('visualization', '1', {packages:['table']});
+      google.setOnLoadCallback(drawTable);
+      var suiteTableInitFunctions = new Array();
+      var suiteTableData = new Array();
+    </script>
+    <!--
+      <script type="text/javascript" src="jquery-ui/js/jquery-ui-1.8.16.custom.min.js"></script>
+     -->
+  </head>
+
+  <body>
+    <div class="top-banner-root">
+      <span class="top-banner-title-font">Test results</span>
+      <br/>
+      <span class="top-banner-font-1">1 suite</span>
+    </div> <!-- top-banner-root -->
+    <div class="navigator-root">
+      <div class="navigator-suite-header">
+        <span>All suites</span>
+        <a href="#" class="collapse-all-link" title="Collapse/expand all the suites">
+          <img class="collapse-all-icon" src="collapseall.gif">
+          </img> <!-- collapse-all-icon -->
+        </a> <!-- collapse-all-link -->
+      </div> <!-- navigator-suite-header -->
+      <div class="suite">
+        <div class="rounded-window">
+          <div class="suite-header light-rounded-window-top">
+            <a href="#" class="navigator-link" panel-name="suite-Command_line_suite">
+              <span class="suite-name border-passed">Command line suite</span>
+            </a> <!-- navigator-link -->
+          </div> <!-- suite-header light-rounded-window-top -->
+          <div class="navigator-suite-content">
+            <div class="suite-section-title">
+              <span>Info</span>
+            </div> <!-- suite-section-title -->
+            <div class="suite-section-content">
+              <ul>
+                <li>
+                  <a href="#" class="navigator-link " panel-name="test-xml-Command_line_suite">
+                    <span>[unset file name]</span>
+                  </a> <!-- navigator-link  -->
+                </li>
+                <li>
+                  <a href="#" class="navigator-link " panel-name="testlist-Command_line_suite">
+                    <span class="test-stats">1 test</span>
+                  </a> <!-- navigator-link  -->
+                </li>
+                <li>
+                  <a href="#" class="navigator-link " panel-name="group-Command_line_suite">
+                    <span>0 groups</span>
+                  </a> <!-- navigator-link  -->
+                </li>
+                <li>
+                  <a href="#" class="navigator-link " panel-name="times-Command_line_suite">
+                    <span>Times</span>
+                  </a> <!-- navigator-link  -->
+                </li>
+                <li>
+                  <a href="#" class="navigator-link " panel-name="reporter-Command_line_suite">
+                    <span>Reporter output</span>
+                  </a> <!-- navigator-link  -->
+                </li>
+                <li>
+                  <a href="#" class="navigator-link " panel-name="ignored-methods-Command_line_suite">
+                    <span>Ignored methods</span>
+                  </a> <!-- navigator-link  -->
+                </li>
+                <li>
+                  <a href="#" class="navigator-link " panel-name="chronological-Command_line_suite">
+                    <span>Chronological view</span>
+                  </a> <!-- navigator-link  -->
+                </li>
+              </ul>
+            </div> <!-- suite-section-content -->
+            <div class="result-section">
+              <div class="suite-section-title">
+                <span>Results</span>
+              </div> <!-- suite-section-title -->
+              <div class="suite-section-content">
+                <ul>
+                  <li>
+                    <span class="method-stats">15 methods,   15 passed</span>
+                  </li>
+                  <li>
+                    <span class="method-list-title passed">Passed methods</span>
+                    <span class="show-or-hide-methods passed">
+                      <a href="#" panel-name="suite-Command_line_suite" class="hide-methods passed suite-Command_line_suite"> (hide)</a> <!-- hide-methods passed suite-Command_line_suite -->
+                      <a href="#" panel-name="suite-Command_line_suite" class="show-methods passed suite-Command_line_suite"> (show)</a> <!-- show-methods passed suite-Command_line_suite -->
+                    </span>
+                    <div class="method-list-content passed suite-Command_line_suite">
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-Command_line_suite" title="com.alone.test.PosAutoTest" hash-for-method="ReservationConsignment">ReservationConsignment</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-Command_line_suite" title="com.alone.test.PosAutoTest" hash-for-method="bulkTicket">bulkTicket</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-Command_line_suite" title="com.alone.test.PosAutoTest" hash-for-method="changeHolder">changeHolder</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-Command_line_suite" title="com.alone.test.PosAutoTest" hash-for-method="claimTicket">claimTicket</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-Command_line_suite" title="com.alone.test.PosAutoTest" hash-for-method="collectionTicket">collectionTicket</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-Command_line_suite" title="com.alone.test.PosAutoTest" hash-for-method="exchangeTicket">exchangeTicket</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-Command_line_suite" title="com.alone.test.PosAutoTest" hash-for-method="login">login</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-Command_line_suite" title="com.alone.test.PosAutoTest" hash-for-method="normalTicket">normalTicket</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-Command_line_suite" title="com.alone.test.PosAutoTest" hash-for-method="poundageTran">poundageTran</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-Command_line_suite" title="com.alone.test.PosAutoTest" hash-for-method="refundTicket">refundTicket</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-Command_line_suite" title="com.alone.test.PosAutoTest" hash-for-method="releaseTicket">releaseTicket</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-Command_line_suite" title="com.alone.test.PosAutoTest" hash-for-method="reprintTicket">reprintTicket</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-Command_line_suite" title="com.alone.test.PosAutoTest" hash-for-method="telephoneTicket">telephoneTicket</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-Command_line_suite" title="com.alone.test.PosAutoTest" hash-for-method="trans">trans</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-Command_line_suite" title="com.alone.test.PosAutoTest" hash-for-method="upgradeTicket">upgradeTicket</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                    </div> <!-- method-list-content passed suite-Command_line_suite -->
+                  </li>
+                </ul>
+              </div> <!-- suite-section-content -->
+            </div> <!-- result-section -->
+          </div> <!-- navigator-suite-content -->
+        </div> <!-- rounded-window -->
+      </div> <!-- suite -->
+    </div> <!-- navigator-root -->
+    <div class="wrapper">
+      <div class="main-panel-root">
+        <div panel-name="suite-Command_line_suite" class="panel Command_line_suite">
+          <div class="suite-Command_line_suite-class-passed">
+            <div class="main-panel-header rounded-window-top">
+              <img src="passed.png"/>
+              <span class="class-name">com.alone.test.PosAutoTest</span>
+            </div> <!-- main-panel-header rounded-window-top -->
+            <div class="main-panel-content rounded-window-bottom">
+              <div class="method">
+                <div class="method-content">
+                  <a name="ReservationConsignment">
+                  </a> <!-- ReservationConsignment -->
+                  <span class="method-name">ReservationConsignment</span>
+                  <em>
+(ReservationConsignment)                  </em>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="bulkTicket">
+                  </a> <!-- bulkTicket -->
+                  <span class="method-name">bulkTicket</span>
+                  <em>
+(bulkTicket)                  </em>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="changeHolder">
+                  </a> <!-- changeHolder -->
+                  <span class="method-name">changeHolder</span>
+                  <em>
+(changeHolder)                  </em>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="claimTicket">
+                  </a> <!-- claimTicket -->
+                  <span class="method-name">claimTicket</span>
+                  <em>
+(releaseTicket)                  </em>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="collectionTicket">
+                  </a> <!-- collectionTicket -->
+                  <span class="method-name">collectionTicket</span>
+                  <em>
+(collectionTicket)                  </em>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="exchangeTicket">
+                  </a> <!-- exchangeTicket -->
+                  <span class="method-name">exchangeTicket</span>
+                  <em>
+(exchangeTicket)                  </em>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="login">
+                  </a> <!-- login -->
+                  <span class="method-name">login</span>
+                  <em>
+(login)                  </em>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="normalTicket">
+                  </a> <!-- normalTicket -->
+                  <span class="method-name">normalTicket</span>
+                  <em>
+(normalTicket)                  </em>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="poundageTran">
+                  </a> <!-- poundageTran -->
+                  <span class="method-name">poundageTran</span>
+                  <em>
+(poundageTran)                  </em>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="refundTicket">
+                  </a> <!-- refundTicket -->
+                  <span class="method-name">refundTicket</span>
+                  <em>
+(refundTicket)                  </em>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="releaseTicket">
+                  </a> <!-- releaseTicket -->
+                  <span class="method-name">releaseTicket</span>
+                  <em>
+(releaseTicket)                  </em>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="reprintTicket">
+                  </a> <!-- reprintTicket -->
+                  <span class="method-name">reprintTicket</span>
+                  <em>
+(reprintTicket)                  </em>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="telephoneTicket">
+                  </a> <!-- telephoneTicket -->
+                  <span class="method-name">telephoneTicket</span>
+                  <em>
+(telephoneTicket)                  </em>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="trans">
+                  </a> <!-- trans -->
+                  <span class="method-name">trans</span>
+                  <em>
+(queryAndSummary)                  </em>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="upgradeTicket">
+                  </a> <!-- upgradeTicket -->
+                  <span class="method-name">upgradeTicket</span>
+                  <em>
+(upgradeTicket)                  </em>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+            </div> <!-- main-panel-content rounded-window-bottom -->
+          </div> <!-- suite-Command_line_suite-class-passed -->
+        </div> <!-- panel Command_line_suite -->
+        <div panel-name="test-xml-Command_line_suite" class="panel">
+          <div class="main-panel-header rounded-window-top">
+          </div> <!-- main-panel-header rounded-window-top -->
+          <div class="main-panel-content rounded-window-bottom">
+            <pre>
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!DOCTYPE suite SYSTEM &quot;http://testng.org/testng-1.0.dtd&quot;&gt;
+&lt;suite name=&quot;Command line suite&quot;&gt;
+  &lt;test name=&quot;Command line test&quot;&gt;
+    &lt;classes&gt;
+      &lt;class name=&quot;com.alone.test.PosAutoTest&quot;/&gt;
+    &lt;/classes&gt;
+  &lt;/test&gt; &lt;!-- Command line test --&gt;
+&lt;/suite&gt; &lt;!-- Command line suite --&gt;
+            </pre>
+          </div> <!-- main-panel-content rounded-window-bottom -->
+        </div> <!-- panel -->
+        <div panel-name="testlist-Command_line_suite" class="panel">
+          <div class="main-panel-header rounded-window-top">
+            <span class="header-content">Tests for Command line suite</span>
+          </div> <!-- main-panel-header rounded-window-top -->
+          <div class="main-panel-content rounded-window-bottom">
+            <ul>
+              <li>
+                <span class="test-name">Command line test (1 class)</span>
+              </li>
+            </ul>
+          </div> <!-- main-panel-content rounded-window-bottom -->
+        </div> <!-- panel -->
+        <div panel-name="group-Command_line_suite" class="panel">
+          <div class="main-panel-header rounded-window-top">
+            <span class="header-content">Groups for Command line suite</span>
+          </div> <!-- main-panel-header rounded-window-top -->
+          <div class="main-panel-content rounded-window-bottom">
+          </div> <!-- main-panel-content rounded-window-bottom -->
+        </div> <!-- panel -->
+        <div panel-name="times-Command_line_suite" class="panel">
+          <div class="main-panel-header rounded-window-top">
+            <span class="header-content">Times for Command line suite</span>
+          </div> <!-- main-panel-header rounded-window-top -->
+          <div class="main-panel-content rounded-window-bottom">
+            <div class="times-div">
+              <script type="text/javascript">
+suiteTableInitFunctions.push('tableData_Command_line_suite');
+function tableData_Command_line_suite() {
+var data = new google.visualization.DataTable();
+data.addColumn('number', 'Number');
+data.addColumn('string', 'Method');
+data.addColumn('string', 'Class');
+data.addColumn('number', 'Time (ms)');
+data.addRows(15);
+data.setCell(0, 0, 0)
+data.setCell(0, 1, 'normalTicket')
+data.setCell(0, 2, 'com.alone.test.PosAutoTest')
+data.setCell(0, 3, 31534);
+data.setCell(1, 0, 1)
+data.setCell(1, 1, 'telephoneTicket')
+data.setCell(1, 2, 'com.alone.test.PosAutoTest')
+data.setCell(1, 3, 29614);
+data.setCell(2, 0, 2)
+data.setCell(2, 1, 'ReservationConsignment')
+data.setCell(2, 2, 'com.alone.test.PosAutoTest')
+data.setCell(2, 3, 8233);
+data.setCell(3, 0, 3)
+data.setCell(3, 1, 'bulkTicket')
+data.setCell(3, 2, 'com.alone.test.PosAutoTest')
+data.setCell(3, 3, 5716);
+data.setCell(4, 0, 4)
+data.setCell(4, 1, 'refundTicket')
+data.setCell(4, 2, 'com.alone.test.PosAutoTest')
+data.setCell(4, 3, 4108);
+data.setCell(5, 0, 5)
+data.setCell(5, 1, 'exchangeTicket')
+data.setCell(5, 2, 'com.alone.test.PosAutoTest')
+data.setCell(5, 3, 3999);
+data.setCell(6, 0, 6)
+data.setCell(6, 1, 'changeHolder')
+data.setCell(6, 2, 'com.alone.test.PosAutoTest')
+data.setCell(6, 3, 2528);
+data.setCell(7, 0, 7)
+data.setCell(7, 1, 'claimTicket')
+data.setCell(7, 2, 'com.alone.test.PosAutoTest')
+data.setCell(7, 3, 2335);
+data.setCell(8, 0, 8)
+data.setCell(8, 1, 'releaseTicket')
+data.setCell(8, 2, 'com.alone.test.PosAutoTest')
+data.setCell(8, 3, 2228);
+data.setCell(9, 0, 9)
+data.setCell(9, 1, 'login')
+data.setCell(9, 2, 'com.alone.test.PosAutoTest')
+data.setCell(9, 3, 2157);
+data.setCell(10, 0, 10)
+data.setCell(10, 1, 'upgradeTicket')
+data.setCell(10, 2, 'com.alone.test.PosAutoTest')
+data.setCell(10, 3, 2044);
+data.setCell(11, 0, 11)
+data.setCell(11, 1, 'poundageTran')
+data.setCell(11, 2, 'com.alone.test.PosAutoTest')
+data.setCell(11, 3, 1759);
+data.setCell(12, 0, 12)
+data.setCell(12, 1, 'collectionTicket')
+data.setCell(12, 2, 'com.alone.test.PosAutoTest')
+data.setCell(12, 3, 1456);
+data.setCell(13, 0, 13)
+data.setCell(13, 1, 'trans')
+data.setCell(13, 2, 'com.alone.test.PosAutoTest')
+data.setCell(13, 3, 1334);
+data.setCell(14, 0, 14)
+data.setCell(14, 1, 'reprintTicket')
+data.setCell(14, 2, 'com.alone.test.PosAutoTest')
+data.setCell(14, 3, 1005);
+window.suiteTableData['Command_line_suite']= { tableData: data, tableDiv: 'times-div-Command_line_suite'}
+return data;
+}
+              </script>
+              <span class="suite-total-time">Total running time: 1 minutes</span>
+              <div id="times-div-Command_line_suite">
+              </div> <!-- times-div-Command_line_suite -->
+            </div> <!-- times-div -->
+          </div> <!-- main-panel-content rounded-window-bottom -->
+        </div> <!-- panel -->
+        <div panel-name="reporter-Command_line_suite" class="panel">
+          <div class="main-panel-header rounded-window-top">
+            <span class="header-content">Reporter output for Command line suite</span>
+          </div> <!-- main-panel-header rounded-window-top -->
+          <div class="main-panel-content rounded-window-bottom">
+          </div> <!-- main-panel-content rounded-window-bottom -->
+        </div> <!-- panel -->
+        <div panel-name="ignored-methods-Command_line_suite" class="panel">
+          <div class="main-panel-header rounded-window-top">
+            <span class="header-content">0 ignored methods</span>
+          </div> <!-- main-panel-header rounded-window-top -->
+          <div class="main-panel-content rounded-window-bottom">
+          </div> <!-- main-panel-content rounded-window-bottom -->
+        </div> <!-- panel -->
+        <div panel-name="chronological-Command_line_suite" class="panel">
+          <div class="main-panel-header rounded-window-top">
+            <span class="header-content">Methods in chronological order</span>
+          </div> <!-- main-panel-header rounded-window-top -->
+          <div class="main-panel-content rounded-window-bottom">
+            <div class="chronological-class">
+              <div class="chronological-class-name">com.alone.test.PosAutoTest</div> <!-- chronological-class-name -->
+              <div class="configuration-test before">
+                <span class="method-name">setup</span>
+                <span class="method-start">0 ms</span>
+              </div> <!-- configuration-test before -->
+              <div class="test-method">
+                <span class="method-name">login</span>
+                <span class="method-start">172 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">normalTicket</span>
+                <span class="method-start">2330 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">ReservationConsignment</span>
+                <span class="method-start">33865 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">claimTicket</span>
+                <span class="method-start">42100 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">releaseTicket</span>
+                <span class="method-start">44436 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">bulkTicket</span>
+                <span class="method-start">46664 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">upgradeTicket</span>
+                <span class="method-start">52381 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">reprintTicket</span>
+                <span class="method-start">54426 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">changeHolder</span>
+                <span class="method-start">55431 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">exchangeTicket</span>
+                <span class="method-start">57960 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">telephoneTicket</span>
+                <span class="method-start">61960 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">collectionTicket</span>
+                <span class="method-start">91575 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">refundTicket</span>
+                <span class="method-start">93031 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">trans</span>
+                <span class="method-start">97141 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">poundageTran</span>
+                <span class="method-start">98475 ms</span>
+              </div> <!-- test-method -->
+              <div class="configuration-test after">
+                <span class="method-name">tearDown</span>
+                <span class="method-start">100234 ms</span>
+              </div> <!-- configuration-test after -->
+          </div> <!-- main-panel-content rounded-window-bottom -->
+        </div> <!-- panel -->
+      </div> <!-- main-panel-root -->
+    </div> <!-- wrapper -->
+  </body>
+</html>

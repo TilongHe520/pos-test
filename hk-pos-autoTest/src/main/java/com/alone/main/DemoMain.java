@@ -63,6 +63,13 @@ public class DemoMain {
         String path = "/Users/maoyan/Desktop/POS/curl_pos.txt";
         FileUtil fileUtil = new FileUtil();
         String curl = fileUtil.getCurl(path);
+        String res = new DemoMain().getResponse(curl);
+
+        System.out.println(res);
+        fileUtil.writeResponse(res,path);
+    }
+
+    public String getResponse(String curl){
         ResolveCurl rc = new ResolveCurl(curl);
         CurlParams cp = rc.getParams();
 
@@ -81,9 +88,7 @@ public class DemoMain {
             res = given().headers(cp.getHeader()).body(cp.getData()).post(cp.getUrl()).asString();
 
         }
-
-        System.out.println(res);
-        fileUtil.writeResponse(res,path);
+        return res;
     }
 
     @Test

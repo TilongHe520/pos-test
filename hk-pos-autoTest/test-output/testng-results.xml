@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" ignored="0" total="15" passed="15">
+  <reporter-output>
+  </reporter-output>
+  <suite name="Command line suite" duration-ms="100415" started-at="2022-01-05T09:34:38Z" finished-at="2022-01-05T09:36:18Z">
+    <groups>
+    </groups>
+    <test name="Command line test" duration-ms="100415" started-at="2022-01-05T09:34:38Z" finished-at="2022-01-05T09:36:18Z">
+      <class name="com.alone.test.PosAutoTest">
+        <test-method status="PASS" signature="setup()[pri:0, instance:com.alone.test.PosAutoTest@7a46a697]" name="setup" is-config="true" duration-ms="161" started-at="2022-01-05T17:34:38Z" description="login" finished-at="2022-01-05T17:34:38Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setup -->
+        <test-method status="PASS" signature="login()[pri:1, instance:com.alone.test.PosAutoTest@7a46a697]" name="login" duration-ms="2157" started-at="2022-01-05T17:34:38Z" description="login" finished-at="2022-01-05T17:34:40Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- login -->
+        <test-method status="PASS" signature="normalTicket()[pri:2, instance:com.alone.test.PosAutoTest@7a46a697]" name="normalTicket" duration-ms="31534" started-at="2022-01-05T17:34:40Z" description="normalTicket" finished-at="2022-01-05T17:35:12Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- normalTicket -->
+        <test-method status="PASS" signature="ReservationConsignment()[pri:3, instance:com.alone.test.PosAutoTest@7a46a697]" name="ReservationConsignment" duration-ms="8233" started-at="2022-01-05T17:35:12Z" description="ReservationConsignment" finished-at="2022-01-05T17:35:20Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- ReservationConsignment -->
+        <test-method status="PASS" signature="claimTicket()[pri:4, instance:com.alone.test.PosAutoTest@7a46a697]" name="claimTicket" duration-ms="2335" started-at="2022-01-05T17:35:20Z" description="releaseTicket" depends-on-methods="com.alone.test.PosAutoTest.ReservationConsignment" finished-at="2022-01-05T17:35:22Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- claimTicket -->
+        <test-method status="PASS" signature="releaseTicket()[pri:5, instance:com.alone.test.PosAutoTest@7a46a697]" name="releaseTicket" duration-ms="2228" started-at="2022-01-05T17:35:22Z" description="releaseTicket" depends-on-methods="com.alone.test.PosAutoTest.ReservationConsignment" finished-at="2022-01-05T17:35:24Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- releaseTicket -->
+        <test-method status="PASS" signature="bulkTicket()[pri:6, instance:com.alone.test.PosAutoTest@7a46a697]" name="bulkTicket" duration-ms="5716" started-at="2022-01-05T17:35:24Z" description="bulkTicket" finished-at="2022-01-05T17:35:30Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- bulkTicket -->
+        <test-method status="PASS" signature="upgradeTicket()[pri:7, instance:com.alone.test.PosAutoTest@7a46a697]" name="upgradeTicket" duration-ms="2044" started-at="2022-01-05T17:35:30Z" description="upgradeTicket" depends-on-methods="com.alone.test.PosAutoTest.normalTicket" finished-at="2022-01-05T17:35:32Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- upgradeTicket -->
+        <test-method status="PASS" signature="reprintTicket()[pri:8, instance:com.alone.test.PosAutoTest@7a46a697]" name="reprintTicket" duration-ms="1005" started-at="2022-01-05T17:35:32Z" description="reprintTicket" depends-on-methods="com.alone.test.PosAutoTest.upgradeTicket" finished-at="2022-01-05T17:35:33Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- reprintTicket -->
+        <test-method status="PASS" signature="changeHolder()[pri:9, instance:com.alone.test.PosAutoTest@7a46a697]" name="changeHolder" duration-ms="2528" started-at="2022-01-05T17:35:33Z" description="changeHolder" depends-on-methods="com.alone.test.PosAutoTest.normalTicket" finished-at="2022-01-05T17:35:36Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- changeHolder -->
+        <test-method status="PASS" signature="exchangeTicket()[pri:10, instance:com.alone.test.PosAutoTest@7a46a697]" name="exchangeTicket" duration-ms="3999" started-at="2022-01-05T17:35:36Z" description="exchangeTicket" depends-on-methods="com.alone.test.PosAutoTest.normalTicket" finished-at="2022-01-05T17:35:40Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- exchangeTicket -->
+        <test-method status="PASS" signature="telephoneTicket()[pri:11, instance:com.alone.test.PosAutoTest@7a46a697]" name="telephoneTicket" duration-ms="29614" started-at="2022-01-05T17:35:40Z" description="telephoneTicket" finished-at="2022-01-05T17:36:09Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- telephoneTicket -->
+        <test-method status="PASS" signature="collectionTicket()[pri:12, instance:com.alone.test.PosAutoTest@7a46a697]" name="collectionTicket" duration-ms="1456" started-at="2022-01-05T17:36:09Z" description="collectionTicket" depends-on-methods="com.alone.test.PosAutoTest.telephoneTicket" finished-at="2022-01-05T17:36:11Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- collectionTicket -->
+        <test-method status="PASS" signature="refundTicket()[pri:13, instance:com.alone.test.PosAutoTest@7a46a697]" name="refundTicket" duration-ms="4108" started-at="2022-01-05T17:36:11Z" description="refundTicket" depends-on-methods="com.alone.test.PosAutoTest.normalTicket, com.alone.test.PosAutoTest.collectionTicket" finished-at="2022-01-05T17:36:15Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- refundTicket -->
+        <test-method status="PASS" signature="trans()[pri:14, instance:com.alone.test.PosAutoTest@7a46a697]" name="trans" duration-ms="1334" started-at="2022-01-05T17:36:15Z" description="queryAndSummary" depends-on-methods="com.alone.test.PosAutoTest.refundTicket" finished-at="2022-01-05T17:36:16Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- trans -->
+        <test-method status="PASS" signature="poundageTran()[pri:15, instance:com.alone.test.PosAutoTest@7a46a697]" name="poundageTran" duration-ms="1759" started-at="2022-01-05T17:36:16Z" description="poundageTran" finished-at="2022-01-05T17:36:18Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- poundageTran -->
+        <test-method status="PASS" signature="tearDown()[pri:0, instance:com.alone.test.PosAutoTest@7a46a697]" name="tearDown" is-config="true" duration-ms="180" started-at="2022-01-05T17:36:18Z" description="logout" finished-at="2022-01-05T17:36:18Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+      </class> <!-- com.alone.test.PosAutoTest -->
+    </test> <!-- Command line test -->
+  </suite> <!-- Command line suite -->
+</testng-results>

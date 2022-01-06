@@ -82,12 +82,14 @@ public class RefundTicket extends BaseBuyTicket {
         String requestData = jsonUtil.updateJsonStr(cp.getData(),refundSettleInfoList,"performanceReleaseRequests");
         requestData = jsonUtil.updateJsonStr(requestData,terminalInfo.getTerminalId(),"terminalCode");
         String response = given().headers(map).body(requestData).post(cp.getUrl()).asString();
+        System.out.println(response);
         String transactionNum = jsonUtil.getValueByKeyReturnString(response,"transactionNo");
         return transactionNum;
     }
 
     public void refundOrder(List<String> trans){
         for (String tranNumber:trans){
+            System.out.println("refundTicketNumber=:   "+tranNumber);
             String refundRes = refundList(tranNumber);
             RefundUtil refundUtil = new RefundUtil();
             RefundAddInfo refundAddInfo = refundUtil.getRefundAddParams(refundRes);
